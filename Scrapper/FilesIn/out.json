@@ -1,0 +1,101 @@
+{
+    "AC AJACCIO": {
+        "budgets.csv": 22,
+        "clubs_victoires.csv": 0,
+        "dates_creas.csv": 1910
+    },
+    "AJ AUXERRE": {
+        "budgets.csv": 32,
+        "clubs_victoires.csv": 1,
+        "dates_creas.csv": 1905
+    },
+    "ANGERS SCO": {
+        "budgets.csv": 40,
+        "clubs_victoires.csv": 0,
+        "dates_creas.csv": 1919
+    },
+    "AS MONACO": {
+        "budgets.csv": 240,
+        "clubs_victoires.csv": 8,
+        "dates_creas.csv": 1924
+    },
+    "STADE BRESTOIS 29": {
+        "budgets.csv": 48,
+        "clubs_victoires.csv": 0,
+        "dates_creas.csv": 1950
+    },
+    "CLERMONT FOOT 63": {
+        "budgets.csv": 25,
+        "clubs_victoires.csv": 0,
+        "dates_creas.csv": 1984
+    },
+    "FC LORIENT": {
+        "budgets.csv": 50,
+        "clubs_victoires.csv": 0,
+        "dates_creas.csv": 1926
+    },
+    "FC NANTES": {
+        "budgets.csv": 75,
+        "clubs_victoires.csv": 8,
+        "dates_creas.csv": 1943
+    },
+    "LOSC LILLE": {
+        "budgets.csv": 100,
+        "clubs_victoires.csv": 4,
+        "dates_creas.csv": 1944
+    },
+    "MONTPELLIER H\u00c9RAULT SC": {
+        "budgets.csv": 52,
+        "clubs_victoires.csv": 1,
+        "dates_creas.csv": 1974
+    },
+    "OGC NICE": {
+        "budgets.csv": 100,
+        "clubs_victoires.csv": 4,
+        "dates_creas.csv": 1904
+    },
+    "OLYMPIQUE LYONNAIS": {
+        "budgets.csv": 250,
+        "clubs_victoires.csv": 7,
+        "dates_creas.csv": 1950
+    },
+    "OLYMPIQUE DE MARSEILLE": {
+        "budgets.csv": 250,
+        "clubs_victoires.csv": 9,
+        "dates_creas.csv": 1899
+    },
+    "PARIS SAINT-GERMAIN": {
+        "clubs_victoires.csv": 11,
+        "dates_creas.csv": 1970
+    },
+    "RC LENS": {
+        "budgets.csv": 62,
+        "clubs_victoires.csv": 1,
+        "dates_creas.csv": 1906
+    },
+    "STADE DE REIMS": {
+        "budgets.csv": 70,
+        "clubs_victoires.csv": 6,
+        "dates_creas.csv": 1931
+    },
+    "STADE RENNAIS FC": {
+        "budgets.csv": 90,
+        "clubs_victoires.csv": 0,
+        "dates_creas.csv": 1901
+    },
+    "RC STRASBOURG ALSACE": {
+        "budgets.csv": 45,
+        "clubs_victoires.csv": 1,
+        "dates_creas.csv": 1906
+    },
+    "TOULOUSE FC": {
+        "budgets.csv": 40,
+        "clubs_victoires.csv": 0,
+        "dates_creas.csv": 1937
+    },
+    "ESTAC TROYES": {
+        "budgets.csv": 45,
+        "clubs_victoires.csv": 0,
+        "dates_creas.csv": 1986
+    }
+}

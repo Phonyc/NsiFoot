@@ -1,0 +1,607 @@
+Clt;Joueur;Nation;Pos;Équipe;Âge;Salaires hebdomadaires;Salaires annuels
+1;Kylian Mbappé;fr FRA;FW;Paris S-G;23;1384615;72000000
+2;Lionel Messi;ar ARG;FWMF;Paris S-G;35;1223846;63640000
+3;Neymar;br BRA;MFFW;Paris S-G;30;1083846;56360000
+4;Keylor Navas;cr CRC;GK;Paris S-G;35;314615;16360000
+5;Achraf Hakimi;ma MAR;DFMF;Paris S-G;23;279808;14550000
+6;Marco Verratti;it ITA;MF;Paris S-G;29;276923;14400000
+7;Marquinhos;br BRA;CB;Paris S-G;29;276923;14400000
+8;Gianluigi Donnarumma;it ITA;GK;Paris S-G;23;244808;12730000
+9;Mauro Icardi;ar ARG;CF;Paris S-G;29;209808;10910000
+10;Sergio Ramos;es ESP;DF;Paris S-G;36;209615;10900000
+11;Fabián Ruiz Peña;es ESP;MF;Paris S-G;26;174808;9090000
+12;Juan Bernat;es ESP;DFMF;Paris S-G;29;168462;8760000
+13;Nordi Mukiele;fr FRA;DF;Paris S-G;24;161538;8400000
+14;Mario Lemina;ga GAB;MFDF;Nice;28;157308;8180000
+15;Wissam Ben Yedder;fr FRA;FW;Monaco;31;150000;7800000
+16;Presnel Kimpembe;fr FRA;DF;Paris S-G;26;147692;7680000
+17;Malang Sarr;fr FRA;DF;Monaco;23;138846;7220000
+18;André Gomes;pt POR;MF;Lille;29;130000;6760000
+19;Jordan Veretout;fr FRA;MF;Marseille;29;126923;6600000
+20;Steve Mandanda;fr FRA;GK;Rennes;37;125962;6550000
+21;Renato Sanches;pt POR;MF;Paris S-G;24;124615;6480000
+22;Alexis Sánchez;cl CHI;FWMF;Marseille;33;115385;6000000
+23;Dimitri Payet;fr FRA;MFFW;Marseille;35;115385;6000000
+24;Carlos Soler;es ESP;MF;Paris S-G;25;115385;6000000
+25;Nicolas Pépé;ci CIV;FWMF;Nice;27;113846;5920000
+26;Aaron Ramsey;wls WAL;MF;Nice;31;104808;5450000
+27;Vitinha;pt POR;MF;Paris S-G;22;104808;5450000
+28;Eric Bailly;ci CIV;DF;Marseille;28;103846;5400000
+29;Alexandre Lacazette;fr FRA;FW;Lyon;31;103846;5400000
+30;Pablo Sarabia;es ESP;FWMF;Paris S-G;30;103846;5400000
+31;Alexander Nübel;de GER;GK;Monaco;25;96154;5000000
+32;Anthony Lopes;pt POR;GK;Lyon;31;92308;4800000
+33;Corentin Tolisso;fr FRA;MF;Lyon;27;92308;4800000
+34;Dejan Lovren;hr CRO;DF;Lyon;33;92308;4800000
+35;Jérôme Boateng;de GER;DF;Lyon;33;92308;4800000
+36;Hugo Ekitike;fr FRA;FW;Paris S-G;20;92308;4800000
+37;Takumi Minamino;jp JPN;MFFW;Monaco;27;88462;4600000
+38;Nicolás Tagliafico;ar ARG;DF;Lyon;29;87500;4550000
+39;Julian Draxler;de GER;LW;Paris S-G;28;83077;4320000
+40;Ruslan Malinovskyi;ua UKR;MFFW;Marseille;29;80769;4200000
+41;Azzedine Ounahi;ma MAR;MFFW;Marseille;22;79808;4150000
+42;Breel Embolo;ch SUI;FW;Monaco;25;77308;4020000
+43;Gerson;br BRA;MF;Marseille;25;76923;4000000
+44;Kasper Schmeichel;dk DEN;GK;Nice;35;76154;3960000
+45;Cengiz Ünder;tr TUR;MFDF;Marseille;25;76154;3960000
+46;Valentin Rongier;fr FRA;MF;Marseille;27;76154;3960000
+47;Pau López;es ESP;GK;Marseille;27;74038;3850000
+48;Chancel Mbemba;cd COD;DF;Marseille;27;73846;3840000
+49;Mattéo Guendouzi;fr FRA;MF;Marseille;23;73846;3840000
+50;Houssem Aouar;dz ALG;MF;Lyon;24;71538;3720000
+51;Moussa Sissoko;fr FRA;MF;Nantes;32;71538;3720000
+52;Thiago Mendes;br BRA;MFDF;Lyon;30;69231;3600000
+53;Aleksandr Golovin;ru RUS;MFFW;Monaco;26;69231;3600000
+54;Gelson Martins;pt POR;MFFW;Monaco;27;69231;3600000
+55;Kevin Volland;de GER;FWMF;Monaco;30;69231;3600000
+56;Maxence Caqueret;fr FRA;MF;Lyon;22;64615;3360000
+57;Jonathan Clauss;fr FRA;DF;Marseille;29;63462;3300000
+58;Danilo Pereira;pt POR;DFMF;Paris S-G;30;61538;3200000
+59;Moussa Dembélé;fr FRA;FWMF;Lyon;26;60000;3120000
+60;Amine Harit;ma MAR;MFFW;Marseille;25;59615;3100000
+61;Wahbi Khazri;tn TUN;FWMF;Montpellier;31;57692;3000000
+62;Vitinha;;CF;Marseille;22;57692;3000000
+63;Martin Terrier;fr FRA;FWMF;Rennes;25;57692;3000000
+64;Krépin Diatta;sn SEN;MFFW;Monaco;23;57692;3000000
+65;Vanderson;br BRA;DFMF;Monaco;21;57692;3000000
+66;Arthur Theate;be BEL;DF;Rennes;22;55962;2910000
+67;Adam Ounas;dz ALG;FWMF;Lille;25;52500;2730000
+68;Caio Henrique Oliveira Silva;br BRA;DF;Monaco;25;51923;2700000
+69;Morgan Sanson;fr FRA;MF;Strasbourg;27;50000;2600000
+70;Sead Kolašinac;ba BIH;DF;Marseille;29;49615;2580000
+71;Andy Delort;dz ALG;FW;Nice;30;48462;2520000
+72;Rayan Cherki;fr FRA;MFFW;Lyon;18;48462;2520000
+73;Rubén Blanco;es ESP;GK;Marseille;27;45000;2340000
+74;Benjamin Bourigeaud;fr FRA;MFFW;Rennes;28;43846;2280000
+75;Samuel Gigot;fr FRA;DF;Marseille;28;43654;2270000
+76;Rony Lopes;pt POR;MFFW;Troyes;26;42308;2200000
+77;Gaëtan Laborde;fr FRA;FW;Nice;28;41538;2160000
+78;Marlos Moreno;co COL;MFDF;Troyes;25;41538;2160000
+79;Hamari Traoré;ml MLI;DF;Rennes;30;41538;2160000
+80;Sergio Rico;es ESP;GK;Paris S-G;28;39423;2050000
+81;Pierre Lees-Melou;fr FRA;MF;Brest;29;39231;2040000
+82;Valère Germain;fr FRA;FWMF;Montpellier;32;35192;1830000
+83;Benjamin Lecomte;fr FRA;GK;Montpellier;31;35000;1820000
+84;Ionuț Radu;ro ROU;GK;Auxerre;25;35000;1820000
+85;Angelo Fulgini;fr FRA;MFFW;Lens;25;35000;1820000
+86;Joe Bryan;eng ENG;MFDF;Nice;28;34615;1800000
+87;Youcef Atal;dz ALG;DFMF;Nice;26;34615;1800000
+88;Sofiane Boufal;ma MAR;FWMF;Angers;28;34615;1800000
+89;Folarin Balogun;us USA;FW;Reims;21;34615;1800000
+90;Ismaily;br BRA;DF;Lille;32;34615;1800000
+91;Moses Simon;ng NGA;FWMF;Nantes;27;34615;1800000
+92;Seko Fofana;ci CIV;MF;Lens;27;34615;1800000
+93;Guillermo Maripán;cl CHI;DF;Monaco;28;34615;1800000
+94;Mostafa Mohamed;eg EGY;FW;Nantes;24;34038;1770000
+95;Jonathan David;ca CAN;FW;Lille;22;32308;1680000
+96;José Fonte;pt POR;DF;Lille;38;32308;1680000
+97;Nuno Tavares;pt POR;DFMF;Marseille;22;32115;1670000
+98;Luis Javier Suárez;co COL;FW;Marseille;24;31538;1640000
+99;Florent Mollet;fr FRA;MF;Nantes;30;31538;1640000
+100;João Victor;br BRA;DF;Nantes;24;31346;1630000
+101;Baptiste Santamaria;fr FRA;MF;Rennes;27;30192;1570000
+102;Ross Barkley;eng ENG;MFFW;Nice;28;30000;1560000
+103;Birger Meling;no NOR;DF;Rennes;27;30000;1560000
+104;Jeremy Doku;be BEL;MFFW;Rennes;20;30000;1560000
+105;Lovro Majer;hr CRO;MFFW;Rennes;24;30000;1560000
+106;Benjamin André;fr FRA;MF;Lille;31;30000;1560000
+107;Morgan Schneiderlin;fr FRA;DM;Nice;32;29615;1540000
+108;Karl Toko Ekambi;cm CMR;FWMF;Rennes;29;29423;1530000
+109;Dante;br BRA;DF;Nice;38;28846;1500000
+110;Pape Gueye;sn SEN;MFDF;Marseille;23;28846;1500000
+111;Arnaud Kalimuendo;fr FRA;FW;Rennes;20;28846;1500000
+112;Xeka;pt POR;MF;Rennes;27;28846;1500000
+113;Amin Sarr;se SWE;FW;Lyon;21;28846;1500000
+114;Ruben Aguilar;fr FRA;DF;Monaco;29;28846;1500000
+115;Benoît Costil;fr FRA;GK;Auxerre;35;27885;1450000
+116;Djed Spence;eng ENG;DF;Rennes;21;27885;1450000
+117;Jordan Ferri;fr FRA;MF;Montpellier;30;27692;1440000
+118;Flavien Tait;fr FRA;MF;Rennes;29;27692;1440000
+119;Kévin Gameiro;fr FRA;FW;Strasbourg;35;27692;1440000
+120;Jonathan Bamba;ci CIV;FW;Lille;26;27692;1440000
+121;Nuno Mendes;pt POR;DF;Paris S-G;20;27692;1440000
+122;Myron Boadu;nl NED;FW;Monaco;21;27115;1410000
+123;Rémy Cabella;fr FRA;MFFW;Lille;32;26538;1380000
+124;Tetê;br BRA;FWMF;Lyon;22;26538;1380000
+125;Youssouf Koné;ml MLI;DF;Ajaccio;27;26154;1360000
+126;Téji Savanier;fr FRA;MF;Montpellier;30;25385;1320000
+127;Nicolas Pallois;fr FRA;DF;Nantes;34;25385;1320000
+128;Frederic Guilbert;fr FRA;DF;Strasbourg;27;24615;1280000
+129;Abdallah Sima;sn SEN;FW;Angers;21;23846;1240000
+130;Jeff Reine-Adélaïde;fr FRA;MF;Troyes;24;23077;1200000
+131;Paul Bernardoni;fr FRA;GK;Angers;25;23077;1200000
+132;Junya Ito;jp JPN;FW;Reims;29;23077;1200000
+133;Yunis Abdelhamid;ma MAR;DF;Reims;34;23077;1200000
+134;Amine Gouiri;dz ALG;FWMF;Rennes;22;23077;1200000
+135;Edon Zhegrova;xk KVX;FWMF;Lille;23;23077;1200000
+136;Romain Faivre;fr FRA;MFFW;Lorient;24;23077;1200000
+137;Jeffinho;;LW;Lyon;23;23077;1200000
+138;Alexis Claude-Maurice;fr FRA;MFFW;Lens;24;23077;1200000
+139;Brice Samba;fr FRA;GK;Lens;28;23077;1200000
+140;Mohamed Camara;ml MLI;MF;Monaco;22;23077;1200000
+141;Jean-Clair Todibo;fr FRA;DF;Nice;22;22692;1180000
+142;Mouhamadou Diarra;fr FRA;MFFW;Strasbourg;18;21923;1140000
+143;Faouzi Ghoulam;dz ALG;DF;Angers;31;20962;1090000
+144;Maxime Busi;be BEL;DF;Reims;22;20962;1090000
+145;Islam Slimani;dz ALG;FW;Brest;34;20962;1090000
+146;Lois Diony;fr FRA;FW;Angers;29;20769;1080000
+147;Yan Valery;tn TUN;DF;Angers;23;20769;1080000
+148;Ibrahim Salah;;LW;Rennes;21;20769;1080000
+149;Matz Sels;be BEL;GK;Strasbourg;30;20769;1080000
+150;Andrei Girotto;br BRA;DFMF;Nantes;30;20769;1080000
+151;Damien Da Silva;fr FRA;DF;Lyon;34;20577;1070000
+152;Sofiane Diop;fr FRA;MFFW;Nice;22;19615;1020000
+153;Alban Lafont;fr FRA;GK;Nantes;23;19615;1020000
+154;Adam Buksa;pl POL;FWMF;Lens;26;19615;1020000
+155;Julian Pollersbeck;de GER;GK;Lorient;27;19423;1010000
+156;Leonardo Balerdi;ar ARG;DF;Marseille;23;19038;990000
+157;Florian Tardieu;fr FRA;MF;Troyes;30;18462;960000
+158;Ike Ugbo;ca CAN;FWMF;Troyes;23;18462;960000
+159;Adrien Hunou;fr FRA;MFFW;Angers;28;18462;960000
+160;Dennis Appiah;fr FRA;DFMF;Nantes;30;18462;960000
+161;Ludovic Blas;fr FRA;MFFW;Nantes;24;18462;960000
+162;Igor Carioca;br BRA;DF;Lorient;25;18269;950000
+163;Youssouf Ndayishimiye;bi BDI;MFDF;Nice;23;18077;940000
+164;Fabien Centonze;fr FRA;DF;Nantes;26;18077;940000
+165;Jean-Eudes Aholou;ci CIV;MF;Strasbourg;28;17885;930000
+166;Terem Moffi;ng NGA;FW;Nice;23;17308;900000
+167;Christopher Jullien;fr FRA;DF;Montpellier;29;17308;900000
+168;Jonas Martin;fr FRA;MF;Lille;32;17308;900000
+169;Jean-Victor Makengo;fr FRA;MF;Lorient;24;17308;900000
+170;Sébastien Corchia;fr FRA;DF;Nantes;31;17308;900000
+171;Loïc Rémy;fr FRA;CF;Brest;36;17308;900000
+172;Khéphren Thuram;fr FRA;MF;Nice;21;16731;870000
+173;Henrique;br BRA;DFFW;Lyon;28;16346;850000
+174;Jonas Omlin;ch SUI;GK;Montpellier;28;16154;840000
+175;Branco van den Boomen;nl NED;MF;Toulouse;27;16154;840000
+176;Renaud Ripart;fr FRA;FWMF;Troyes;29;16154;840000
+177;M'Baye Niang;sn SEN;FW;Auxerre;27;16154;840000
+178;Romain Hamouma;fr FRA;FWMF;Ajaccio;35;16154;840000
+179;Alexander Djiku;gh GHA;DF;Strasbourg;27;16154;840000
+180;Lebo Mothiba;za RSA;FWMF;Strasbourg;26;16154;840000
+181;Sanjin Prcić;ba BIH;MF;Strasbourg;28;16154;840000
+182;Steve Mounié;bj BEN;FW;Brest;27;16154;840000
+183;Loïs Openda;be BEL;FW;Lens;22;16154;840000
+184;Jean Lucas;br BRA;MF;Monaco;24;15385;800000
+185;Adil Rami;fr FRA;DF;Troyes;36;15000;780000
+186;Ante Palaversa;hr CRO;MF;Troyes;22;15000;780000
+187;Xavier Chavalerin;fr FRA;MF;Troyes;31;15000;780000
+188;Akim Zedadka;dz ALG;DF;Auxerre;27;15000;780000
+189;Nabil Bentaleb;dz ALG;MF;Angers;27;15000;780000
+190;Alexsandro;;CB;Lille;23;15000;780000
+191;Fábio;br BRA;DFMF;Nantes;32;15000;780000
+192;Ignatius Ganago;cm CMR;FWMF;Nantes;23;15000;780000
+193;Maxime Gonalons;fr FRA;MF;Clermont Foot;33;15000;780000
+194;Jordan Lotomba;ch SUI;DF;Nice;23;14615;760000
+195;Mama Samba Baldé;gw GNB;FW;Troyes;26;14615;760000
+196;Youcef Belaïli;dz ALG;MFFW;Ajaccio;30;14615;760000
+197;Willem Geubbels;fr FRA;LW;Monaco;21;14615;760000
+198;Arnaud Nordin;fr FRA;FW;Montpellier;24;14423;750000
+199;Brecht Dejaegere;be BEL;MF;Toulouse;31;13846;720000
+200;Rayan Raveloson;mg MAD;DFMF;Auxerre;25;13846;720000
+201;Miha Blažič;si SVN;DF;Angers;29;13846;720000
+202;Arber Zeneli;xk KVX;FWMF;Reims;27;13846;720000
+203;Azor Matusiwa;nl NED;MF;Reims;24;13846;720000
+204;Jens Cajuste;se SWE;MF;Reims;22;13846;720000
+205;Marshall Munetsi;zw ZIM;MF;Reims;26;13846;720000
+206;Thomas Foket;be BEL;DF;Reims;27;13846;720000
+207;Eduard Sobol;ua UKR;DF;Strasbourg;27;13846;720000
+208;Mohamed Lamine Bayo;gn GUI;FWMF;Lille;24;13846;720000
+209;Yvon Mvogo;ch SUI;GK;Lorient;28;13846;720000
+210;Johann Lepenant;fr FRA;MF;Lyon;19;13846;720000
+211;Pedro Chirivella;es ESP;MF;Nantes;25;13846;720000
+212;Kenny Lala;fr FRA;DF;Brest;30;13846;720000
+213;Jimmy Cabot;fr FRA;DFMF;Lens;28;13846;720000
+214;Axel Disasi;fr FRA;DF;Monaco;24;13846;720000
+215;Angel Gomes;eng ENG;MF;Lille;21;13654;710000
+216;Abdu Conté;pt POR;DF;Troyes;24;13462;700000
+217;Jubal;br BRA;DF;Auxerre;28;13462;700000
+218;Timothy Weah;us USA;DFFW;Lille;22;13462;700000
+219;Romain Salin;fr FRA;GK;Rennes;38;13269;690000
+220;Souleyman Doumbia;ci CIV;DFFW;Angers;25;13077;680000
+221;Erik Palmer-Brown;us USA;DF;Troyes;25;12692;660000
+222;Jackson Porozo;ec ECU;DF;Troyes;21;12692;660000
+223;Lucien Agoume;fr FRA;MF;Troyes;20;12692;660000
+224;Rominigue Kouamé;ml MLI;MF;Troyes;25;12692;660000
+225;Tristan Dingomé;cm CMR;MF;Troyes;31;12692;660000
+226;Yoann Salmier;gf GUF;DF;Troyes;29;12692;660000
+227;Issa Kaboré;bf BFA;DF;Marseille;21;12692;660000
+228;Colin Dagba;fr FRA;DFMF;Strasbourg;23;12692;660000
+229;Jérémie Bela;ao ANG;DFMF;Clermont Foot;29;12692;660000
+230;Christophe Hérelle;mq MTQ;DF;Brest;29;12692;660000
+231;Ismail Jakobs;sn SEN;DFFW;Monaco;22;12500;650000
+232;Boubakar Kouyaté;ml MLI;DF;Montpellier;25;12308;640000
+233;Cédric Hountondji;bj BEN;DF;Angers;28;12115;630000
+234;Moussa Djitte;sn SEN;FW;Ajaccio;22;11731;610000
+235;Dimitri Liénard;fr FRA;DFMF;Strasbourg;34;11731;610000
+236;Habib Diallo;sn SEN;FW;Strasbourg;27;11731;610000
+237;Sinaly Diomande;ci CIV;DF;Lyon;21;11731;610000
+238;Mattia Viti;it ITA;DF;Nice;20;11538;600000
+239;Ado Onaiwu;jp JPN;FW;Toulouse;26;11538;600000
+240;Gabriel Suazo;;LB;Toulouse;25;11538;600000
+241;Mikkel Desler;dk DEN;DF;Toulouse;27;11538;600000
+242;Ibrahima Niane;sn SEN;FW;Angers;23;11538;600000
+243;Thomas Mangani;fr FRA;MF;Ajaccio;35;11538;600000
+244;Emmanuel Agbadou;ci CIV;DF;Reims;25;11538;600000
+245;Yehvann Diouf;fr FRA;GK;Reims;22;11538;600000
+246;Franck Honorat;fr FRA;FWMF;Brest;25;11538;600000
+247;Alexandre Letellier;fr FRA;GK;Paris S-G;31;11538;600000
+248;Kamaldeen Sulemana;gh GHA;FWMF;Rennes;20;11346;590000
+249;Joe Rodon;wls WAL;DF;Rennes;24;11154;580000
+250;Benoît Badiashile;fr FRA;DF;Monaco;21;11154;580000
+251;Ibrahim Amadou;fr FRA;DFMF;Angers;29;10962;570000
+252;Montassar Talbi;tn TUN;DF;Lorient;24;10962;570000
+253;Pedro Mendes;pt POR;DF;Montpellier;31;10577;550000
+254;Rasmus Nicolaisen;dk DEN;DF;Toulouse;25;10577;550000
+255;Batista Mendy;fr FRA;MFDF;Angers;22;10577;550000
+256;Alfred Gomis;sn SEN;GK;Rennes;29;10577;550000
+257;Quentin Boisgard;fr FRA;MF;Lorient;25;10577;550000
+258;Veljko Birmancevic;;LW;Toulouse;24;10385;540000
+259;Pierrick Capelle;fr FRA;MFDF;Angers;35;10385;540000
+260;Gedeon Kalulu;cd COD;DF;Lorient;24;10385;540000
+261;Charles Traore;ml MLI;DF;Nantes;30;10385;540000
+262;Jean-Charles Castelletto;cm CMR;DF;Nantes;27;10385;540000
+263;Johan Gastien;fr FRA;MF;Clermont Foot;34;10385;540000
+264;Brendan Chardonnet;fr FRA;DF;Brest;27;10385;540000
+265;Haris Belkebla;dz ALG;MF;Brest;28;10385;540000
+266;Marco Bizot;nl NED;GK;Brest;31;10385;540000
+267;Romain Del Castillo;fr FRA;MFFW;Brest;26;10385;540000
+268;Maximiliano Caufriez;be BEL;DF;Clermont Foot;25;10192;530000
+269;El Chadaille Bitshiabu;fr FRA;DF;Paris S-G;17;10192;530000
+270;Donovan Léon;gf GUF;GK;Auxerre;29;10000;520000
+271;Patrick Pentz;at AUT;GK;Reims;25;10000;520000
+272;Thomas Delaine;fr FRA;DFMF;Strasbourg;30;10000;520000
+273;Adrian Grbić;at AUT;MFFW;Lorient;25;9808;510000
+274;Mathias Pereira Lage;pt POR;MFFW;Brest;25;9808;510000
+275;Stephy Mavididi;eng ENG;FW;Montpellier;24;9615;500000
+276;Rafael Ratão;br BRA;FWMF;Toulouse;26;9615;500000
+277;Léo Jardim;br BRA;GK;Lille;27;9615;500000
+278;Kevin Danso;at AUT;DF;Lens;23;9615;500000
+279;Ludovic Ajorque;fr FRA;FW;Strasbourg;28;9423;490000
+280;Saïd Hamulic;;CF;Toulouse;22;9231;480000
+281;Youssouf M'Changama;km COM;MF;Auxerre;31;9231;480000
+282;Ronaël Pierre-Gabriel;fr FRA;DF;Strasbourg;24;9231;480000
+283;Marcus Coco;fr FRA;FWMF;Nantes;26;9231;480000
+284;Achraf Dari;;CB;Brest;23;9231;480000
+285;Jere Uronen;fi FIN;DF;Brest;28;9231;480000
+286;Julien Le Cardinal;fr FRA;DF;Lens;24;9231;480000
+287;Eliesse Ben Seghir;;CF;Monaco;17;9231;480000
+288;Wuilker Faríñez;ve VEN;GK;Lens;24;9038;470000
+289;Birama Touré;ml MLI;MF;Auxerre;30;8846;460000
+290;Siriki Dembélé;ci CIV;MFFW;Auxerre;25;8846;460000
+291;Mamadou Sakho;fr FRA;DF;Montpellier;32;8654;450000
+292;Bamba Dieng;sn SEN;FWMF;Marseille;22;8654;450000
+293;Gerzino Nyamsi;fr FRA;DF;Strasbourg;25;8654;450000
+294;Neto Borges;br BRA;DF;Clermont Foot;25;8654;450000
+295;Irvin Cardona;fr FRA;FWMF;Brest;24;8654;450000
+296;Théo Pellenard;fr FRA;DF;Auxerre;28;8462;440000
+297;Adrien Thomasson;fr FRA;MF;Strasbourg;28;8462;440000
+298;Julien Laporte;fr FRA;DF;Lorient;28;8462;440000
+299;Arnaud Souquet;fr FRA;DFFW;Montpellier;30;8269;430000
+300;Wesley Saïd;fr FRA;FWMF;Lens;27;8269;430000
+301;Gideon Mensah;gh GHA;DF;Auxerre;24;8077;420000
+302;Rémy Riou;fr FRA;GK;Lyon;34;8077;420000
+303;Florent Ogier;fr FRA;DF;Clermont Foot;33;8077;420000
+304;Jean Onana;cm CMR;MFDF;Lens;22;8077;420000
+305;Issiaga Sylla;gn GUI;DF;Montpellier;28;7692;400000
+306;Elisha Owusu;gh GHA;DM;Auxerre;25;7692;400000
+307;Ismaël Doukouré;fr FRA;DFMF;Strasbourg;19;7692;400000
+308;Maxime Le Marchand;fr FRA;DF;Strasbourg;32;7692;400000
+309;Gabriel Gudmundsson;se SWE;DFFW;Lille;23;7692;400000
+310;Malo Gusto;fr FRA;DF;Lyon;19;7692;400000
+311;Jodel Dossou;bj BEN;MFDF;Clermont Foot;30;7692;400000
+312;Pablo Rosario;nl NED;MFDF;Nice;25;7500;390000
+313;Julien Ponceau;fr FRA;MF;Lorient;21;7500;390000
+314;Bradley Barcola;fr FRA;FWMF;Lyon;19;7500;390000
+315;Kaj Sierhuis;nl NED;FWMF;Reims;24;7308;380000
+316;Chrislain Matsima;fr FRA;DFMF;Lorient;20;7308;380000
+317;Eiji Kawashima;jp JPN;GK;Strasbourg;39;7115;370000
+318;Alexis Beka Beka;fr FRA;MFDF;Nice;21;6923;360000
+319;Marcin Bułka;pl POL;GK;Nice;22;6923;360000
+320;Bingourou Kamara;sn SEN;GK;Montpellier;25;6923;360000
+321;Théo Sainte-Luce;fr FRA;DF;Montpellier;23;6923;360000
+322;Vincent Sierro;ch SUI;MF;Toulouse;26;6923;360000
+323;Gauthier Gallon;fr FRA;GK;Troyes;29;6923;360000
+324;Dénys Bain;fr FRA;DF;Auxerre;29;6923;360000
+325;Vincent Marchetti;fr FRA;MF;Ajaccio;25;6923;360000
+326;Désiré Doué;;AM;Rennes;17;6923;360000
+327;Bafodé Diakité;fr FRA;DF;Lille;21;6923;360000
+328;Adil Aouchiche;fr FRA;MF;Lorient;20;6923;360000
+329;Jérémy Le Douaron;fr FRA;MFFW;Brest;24;6923;360000
+330;Ilyes Housni;;CF;Paris S-G;17;6923;360000
+331;Gaëtan Charbonnier;fr FRA;FWMF;Auxerre;33;6731;350000
+332;Cédric Avinel;gp GLP;DF;Ajaccio;35;6731;350000
+333;Mitchell van Bergen;nl NED;FWDF;Reims;22;6731;350000
+334;Sada Thioub;sn SEN;DFFW;Angers;27;6538;340000
+335;Jean-Ricner Bellegarde;fr FRA;MFFW;Strasbourg;24;6538;340000
+336;Deiver Machado;co COL;DFMF;Lens;28;6538;340000
+337;Jean-Louis Leca;fr FRA;GK;Lens;36;6538;340000
+338;Thomas Didillon;fr FRA;GK;Monaco;26;6538;340000
+339;Abdoulaye Bamba;ci CIV;DF;Angers;32;6346;330000
+340;Ibrahima Sissoko;ml MLI;MF;Strasbourg;24;6346;330000
+341;Tiago Djaló;pt POR;DF;Lille;22;6346;330000
+342;Mory Diaw;sn SEN;GK;Clermont Foot;29;6346;330000
+343;Isak Pettersson;se SWE;GK;Toulouse;25;6154;320000
+344;Han-Noah Massengo;fr FRA;MF;Auxerre;21;6154;320000
+345;Mathias Autret;fr FRA;MFFW;Auxerre;31;6154;320000
+346;Abdoul Kader Bamba;fr FRA;FWMF;Nantes;28;6154;320000
+347;Timothee Pembele;fr FRA;DF;Paris S-G;19;6154;320000
+348;Nicolas Cozza;fr FRA;DF;Montpellier;23;5962;310000
+349;Gaëtan Perrin;fr FRA;MFFW;Auxerre;26;5962;310000
+350;Steven Fortes;cv CPV;DF;Lens;30;5962;310000
+351;Kjetil Haug;no NOR;GK;Toulouse;24;5769;300000
+352;Zakaria Aboukhlal;ma MAR;FWMF;Toulouse;22;5769;300000
+353;Mateusz Lis;pl POL;GK;Troyes;25;5769;300000
+354;Gauthier Hein;fr FRA;MFFW;Auxerre;25;5769;300000
+355;Nuno da Costa;cv CPV;FWMF;Auxerre;31;5769;300000
+356;Fernand Mayembo;cg CGO;DF;Ajaccio;26;5769;300000
+357;Robin Risser;;GK;Strasbourg;18;5769;300000
+358;Ayman Kari;;CM;Lorient;18;5769;300000
+359;Evann Guessand;fr FRA;FWMF;Nantes;21;5769;300000
+360;Alidu Seidu;gh GHA;DF;Clermont Foot;22;5769;300000
+361;Grejohn Kyei;fr FRA;FW;Clermont Foot;26;5769;300000
+362;Komnen Andrić;rs SRB;FW;Clermont Foot;27;5769;300000
+363;Mahdi Camara;fr FRA;MF;Brest;24;5769;300000
+364;Hicham Boudaoui;dz ALG;MF;Nice;22;5577;290000
+365;Logan Costa;cv CPV;DF;Toulouse;21;5577;290000
+366;Yanis Begraoui;ma MAR;FWMF;Toulouse;21;5577;290000
+367;Alexis Tibidi;fr FRA;FWMF;Troyes;18;5577;290000
+368;Quentin Bernard;fr FRA;DF;Auxerre;33;5577;290000
+369;Farid El Melali;dz ALG;DFFW;Angers;25;5577;290000
+370;Benjamin Leroy;fr FRA;GK;Ajaccio;33;5577;290000
+371;Przemysław Frankowski;pl POL;DFMF;Lens;27;5577;290000
+372;Youssouf Fofana;fr FRA;MF;Monaco;23;5385;280000
+373;Faitout Maouassa;fr FRA;FWDF;Montpellier;24;5192;270000
+374;Andreas Bruus;;RB;Troyes;23;5192;270000
+375;Papa Ndiaga Yade;sn SEN;DFMF;Troyes;22;5192;270000
+376;Hamza Sakhi;fr FRA;MF;Auxerre;26;5192;270000
+377;Julian Jeanvier;gn GUI;DF;Auxerre;30;5192;270000
+378;Alan Virginius;fr FRA;FW;Lille;19;5192;270000
+379;Bonke Innocent;ng NGA;MF;Lorient;26;5192;270000
+380;Mateusz Wieteska;;CB;Clermont Foot;25;5192;270000
+381;Muhammed Cham;at AUT;MF;Clermont Foot;21;5192;270000
+382;Salis Abdul Samed;gh GHA;MF;Lens;22;5192;270000
+383;Léo Leroy;fr FRA;MF;Montpellier;22;5000;260000
+384;Maxime Dupé;fr FRA;GK;Toulouse;29;5000;260000
+385;Thibault Tamas;fr FRA;DF;Montpellier;21;4808;250000
+386;Marin Jakoliš;hr CRO;FW;Angers;25;4808;250000
+387;Lorenz Assignon;tg TOG;DF;Rennes;22;4808;250000
+388;Adam Jakubech;sk SVK;GK;Lille;25;4808;250000
+389;Ibrahima Koné;ml MLI;FW;Lorient;23;4808;250000
+390;Vincent Le Goff;fr FRA;DF;Lorient;32;4808;250000
+391;Jaouen Hadjam;dz ALG;DF;Nantes;19;4808;250000
+392;Warren Zaïre-Emery;;DM;Paris S-G;16;4808;250000
+393;Mads Bech Sørensen;dk DEN;DF;Nice;23;4615;240000
+394;Oliver Zandén;;LB;Toulouse;21;4615;240000
+395;Theocharis Tsingaras;;CM;Toulouse;22;4615;240000
+396;Warren Kamanzi;;RB;Toulouse;22;4615;240000
+397;Souleymane Touré;fr FRA;DF;Marseille;19;4615;240000
+398;Amine Salama;fr FRA;FWMF;Angers;22;4615;240000
+399;Ilyes Chetti;;LB;Angers;27;4615;240000
+400;Yahia Fofana;ci CIV;GK;Angers;21;4615;240000
+401;Mickaël Alphonse;gp GLP;DF;Ajaccio;33;4615;240000
+402;Moussa Soumano;;CF;Ajaccio;17;4615;240000
+403;Christopher Wooh;cm CMR;DF;Rennes;20;4615;240000
+404;Laurent Abergel;fr FRA;MF;Lorient;29;4615;240000
+405;Vito Mannone;it ITA;GK;Lorient;34;4615;240000
+406;Mehdi Zeffane;dz ALG;DFMF;Clermont Foot;30;4615;240000
+407;Florian Sotoca;fr FRA;MFFW;Lens;31;4615;240000
+408;Massadio Haïdara;ml MLI;DFMF;Lens;29;4615;240000
+409;Rémy Labeau Lascary;;CF;Lens;20;4615;240000
+410;Mathieu Coutadeur;fr FRA;MF;Ajaccio;36;4423;230000
+411;Stéphane Diarra;fr FRA;FWMF;Lorient;23;4231;220000
+412;Denis Petrić;rs SRB;GK;Nantes;34;4231;220000
+413;Jean-Kevin Duverne;ht HAI;DF;Brest;25;4231;220000
+414;Kevin Spadanuda;ch SUI;MFFW;Ajaccio;25;4038;210000
+415;Darlin Yongwa;cm CMR;DF;Lorient;21;4038;210000
+416;Samuel Moutoussamy;cd COD;MF;Nantes;25;4038;210000
+417;Brandon Baiye;be BEL;MF;Clermont Foot;21;4038;210000
+418;Noah Fadiga;sn SEN;DF;Brest;22;4038;210000
+419;Melvin Bard;fr FRA;DF;Nice;21;3846;200000
+420;Jessy Moulin;fr FRA;GK;Troyes;36;3846;200000
+421;Alexis Flips;fr FRA;FWMF;Reims;22;3846;200000
+422;Nicolas Penneteau;fr FRA;GK;Reims;41;3846;200000
+423;Karol Fila;pl POL;DF;Strasbourg;24;3846;200000
+424;Alberth Elis;hn HON;MFFW;Brest;26;3846;200000
+425;Rares Ilie;;LW;Nice;19;3462;180000
+426;Denis Genreau;au AUS;MF;Toulouse;23;3462;180000
+427;Alexandre Coeff;fr FRA;DF;Auxerre;30;3462;180000
+428;Ousmane Camara;fr FRA;DF;Angers;19;3462;180000
+429;Théo Le Bris;fr FRA;MFDF;Lorient;19;3462;180000
+430;Yoann Cathline;fr FRA;FWMF;Lorient;20;3462;180000
+431;Yohann Magnin;fr FRA;MF;Clermont Foot;25;3462;180000
+432;Antonin Bobichon;fr FRA;MF;Angers;26;3269;170000
+433;Lucas Chevalier;fr FRA;GK;Lille;20;3269;170000
+434;Jonathan Gradit;fr FRA;DF;Lens;29;3269;170000
+435;Stijn Spierings;nl NED;MF;Toulouse;26;3077;160000
+436;Arial Mendy;sn SEN;DF;Clermont Foot;27;3077;160000
+437;Maxime Estève;fr FRA;DF;Montpellier;20;2885;150000
+438;Thierno Balde;fr FRA;DFMF;Troyes;20;2885;150000
+439;Kenji-Van Boto;mg MAD;DF;Auxerre;26;2885;150000
+440;Waniss Taibi;fr FRA;MF;Angers;20;2885;150000
+441;Alassane N'Diaye;fr FRA;RM;Ajaccio;31;2885;150000
+442;Riad Nouri;fr FRA;MFFW;Ajaccio;37;2885;150000
+443;Yoann Touzghar;tn TUN;FW;Ajaccio;35;2885;150000
+444;Myziane Maolida;km COM;MFFW;Reims;23;2885;150000
+445;Noah Holm;no NOR;FWMF;Reims;21;2885;150000
+446;Thibault De Smet;be BEL;DF;Reims;24;2885;150000
+447;Adrien Truffert;fr FRA;DF;Rennes;20;2885;150000
+448;Isaac Lihadji;fr FRA;FW;Lille;20;2885;150000
+449;Mohamed El Arouch;fr FRA;MF;Lyon;18;2885;150000
+450;Ismaël Gharbi;es ESP;MFFW;Paris S-G;18;2885;150000
+451;Billal Brahimi;dz ALG;RW;Nice;22;2692;140000
+452;Falaye Sacko;ml MLI;DF;Montpellier;27;2692;140000
+453;Oumar Gonzalez;cm CMR;DF;Ajaccio;24;2692;140000
+454;Elba Rashani;xk KVX;MFFW;Clermont Foot;29;2692;140000
+455;Rhys Healey;wls WAL;FW;Toulouse;27;2500;130000
+456;Qazim Laçi;al ALB;MF;Ajaccio;26;2500;130000
+457;Doğan Alemdar;tr TUR;GK;Rennes;19;2500;130000
+458;Jim Allevinah;ga GAB;DFFW;Clermont Foot;27;2500;130000
+459;Khalil Fayad;;CM;Montpellier;18;2308;120000
+460;Farès Chaïbi;;CM;Toulouse;19;2308;120000
+461;Junior Flemmings;jm JAM;FWMF;Toulouse;26;2308;120000
+462;Thijs Dallinga;nl NED;FW;Toulouse;21;2308;120000
+463;Gabriel Mutombo;fr FRA;CB;Troyes;26;2308;120000
+464;Rémy Dugimont;fr FRA;FWMF;Auxerre;36;2308;120000
+465;Himad Abdelli;dz ALG;MFFW;Angers;22;2308;120000
+466;Rémy Descamps;fr FRA;GK;Nantes;26;2308;120000
+467;Joaquín Blázquez;ar ARG;GK;Brest;21;2308;120000
+468;Facundo Medina;ar ARG;DF;Lens;23;2308;120000
+469;Maghnes Akliouche;fr FRA;MFFW;Monaco;20;2308;120000
+470;Lucas Lavallée;fr FRA;GK;Paris S-G;19;2308;120000
+471;Rafik Guitane;fr FRA;FW;Reims;23;2115;110000
+472;Dimitry Bertaud;fr FRA;GK;Montpellier;24;1923;100000
+473;Elye Wahi;fr FRA;FW;Montpellier;19;1923;100000
+474;François-Joseph Sollacaro;fr FRA;GK;Ajaccio;28;1923;100000
+475;Kouamé Botué;bf BFA;FWMF;Ajaccio;19;1923;100000
+476;Mickaël Barreto;fr FRA;MF;Ajaccio;31;1923;100000
+477;Mohamed Youssouf;km COM;DF;Ajaccio;34;1923;100000
+478;Dion Lopy;sn SEN;MF;Reims;20;1923;100000
+479;Lucas Perrin;fr FRA;DF;Strasbourg;23;1923;100000
+480;Enzo Le Fée;fr FRA;MF;Lorient;22;1923;100000
+481;Castello Lukeba;fr FRA;DF;Lyon;19;1923;100000
+482;Baila Diallo;fr FRA;DFMF;Clermont Foot;21;1923;100000
+483;Saîf-Eddine Khaoui;tn TUN;MF;Clermont Foot;27;1923;100000
+484;Antoine Mendy;;RB;Nice;18;1731;90000
+485;Enzo Tchato;cm CMR;DF;Montpellier;19;1731;90000
+486;Sacha Delaye;;CM;Montpellier;20;1731;90000
+487;Anthony Rouault;fr FRA;DF;Toulouse;21;1731;90000
+488;Bartuğ Elmaz;tr TUR;MF;Marseille;19;1731;90000
+489;Halid Šabanović;ba BIH;DF;Angers;22;1731;90000
+490;Ulrick Eneme;ga GAB;CF;Angers;21;1731;90000
+491;Chaker Alhadhur;km COM;LB;Ajaccio;30;1731;90000
+492;Ghjuvanni Quilichini;fr FRA;GK;Ajaccio;19;1731;90000
+493;Andrew Gravillon;gp GLP;DF;Reims;24;1731;90000
+494;Yuito Suzuki;;AM;Strasbourg;21;1731;90000
+495;Carlos Baleba;;CM;Lille;19;1731;90000
+496;Siriné Doucouré;;CF;Lorient;20;1731;90000
+497;Kayne Bonnevie;fr FRA;GK;Lyon;21;1731;90000
+498;Lilian Brassier;fr FRA;DF;Brest;22;1731;90000
+499;Łukasz Poręba;pl POL;MF;Lens;22;1731;90000
+500;Soungoutou Magassa;;CM;Monaco;18;1731;90000
+501;Yllan Okou;;CB;Monaco;19;1731;90000
+502;Simon Ngapandouetnbu;cm CMR;GK;Marseille;19;1538;80000
+503;Samuel Loric;fr FRA;DF;Lorient;22;1538;80000
+504;Mohamed Achi;fr FRA;FW;Nantes;20;1538;80000
+505;Moussa Diarra;ml MLI;DF;Toulouse;21;1346;70000
+506;Cyrille Bayala;bf BFA;MF;Ajaccio;26;1346;70000
+507;Ismael Diallo;ci CIV;DF;Ajaccio;25;1346;70000
+508;Maxime Wackers;;CB;Lorient;25;1346;70000
+509;Quentin Merlin;fr FRA;DF;Nantes;20;1346;70000
+510;Reda Belahyane;;DM;Nice;18;1154;60000
+511;Joris Chotard;fr FRA;MF;Montpellier;20;1154;60000
+512;Kévin Keben;;CB;Toulouse;18;1154;60000
+513;Eric N'Jo;fr FRA;DF;Troyes;18;1154;60000
+514;Levi Lumeka;eng ENG;LW;Troyes;24;1154;60000
+515;Tanguy Zoukrou;fr FRA;DF;Troyes;19;1154;60000
+516;Aylan Benyahia-Tani;;CF;Marseille;17;1154;60000
+517;Jelle Van Neck;;GK;Marseille;18;1154;60000
+518;Brayann Pereira;;RB;Auxerre;19;1154;60000
+519;Kays Ruiz;ma MAR;MF;Auxerre;19;1154;60000
+520;Lassine Sinayoko;ml MLI;MFFW;Auxerre;22;1154;60000
+521;Ousoumane Camara;fr FRA;MF;Auxerre;23;1154;60000
+522;Ali Kalla;;RB;Angers;24;1154;60000
+523;Zinédine Ould Khaled;fr FRA;MFFW;Angers;22;1154;60000
+524;Paolo Lebas;;CM;Ajaccio;19;1154;60000
+525;Timothée Nkada;fr FRA;CF;Reims;23;1154;60000
+526;Leny Yoro;;CB;Lille;16;1154;60000
+527;Florent da Silva;fr FRA;CM;Lyon;19;1154;60000
+528;Saël Kumbedi;;RB;Lyon;17;1154;60000
+529;Axel Camblan;;AM;Brest;19;1154;60000
+530;Karamoko Dembele;sct SCO;FWMF;Brest;19;1154;60000
+531;Taïryk Arconte;fr FRA;FW;Brest;18;1154;60000
+532;Yannick Pandor;km COM;GK;Lens;21;1154;60000
+533;Yaya Fofana;;CM;Lens;18;1154;60000
+534;Yann Lienard;;GK;Monaco;19;1154;60000
+535;Badredine Bouanani;;RW;Nice;17;962;50000
+536;Lucas Da Cunha;fr FRA;RW;Nice;21;962;50000
+537;Idjessi Metsoko;;CF;Auxerre;20;962;50000
+538;Natanaël Bouekou;;DM;Auxerre;20;962;50000
+539;Ousmane Camara;;CF;Auxerre;21;962;50000
+540;Paul Joly;fr FRA;DF;Auxerre;22;962;50000
+541;Melvin Zinga;;GK;Angers;20;962;50000
+542;Théo Borne;;GK;Angers;20;962;50000
+543;Ruan Levine;;RW;Ajaccio;24;962;50000
+544;Martin Adeline;;CM;Reims;18;962;50000
+545;Elias Damergy;tn TUN;GK;Rennes;19;962;50000
+546;Bamo Meïté;;DM;Lorient;21;962;50000
+547;Lohann Doucet;fr FRA;MFFW;Nantes;19;962;50000
+548;Robin Voisine;fr FRA;DF;Nantes;20;962;50000
+549;Samuel Yépié Yépié;;AM;Nantes;19;962;50000
+550;Wabo Kamdem;fr FRA;MF;Clermont Foot;19;962;50000
+551;Félix Lemaréchal;fr FRA;MF;Brest;18;962;50000
+552;Hugo Magnetti;fr FRA;MF;Brest;24;962;50000
+553;Josué Escartin;;CB;Brest;19;962;50000
+554;Adam Oudjani;dz ALG;AM;Lens;21;962;50000
+555;Daouda Traoré;;RM;Nice;16;769;40000
+556;Amar Abdirahman Ahmed;;LW;Troyes;18;769;40000
+557;Wilson Odobert;;RW;Troyes;18;769;40000
+558;Kévin Danois;;AM;Auxerre;18;769;40000
+559;Kylian Silvestre;;RW;Auxerre;20;769;40000
+560;Vincenzo Cozzella;;GK;Auxerre;21;769;40000
+561;Jason Mbock;fr FRA;MFFW;Angers;22;769;40000
+562;Bevic Moussiti-Oko;cg CGO;FW;Ajaccio;27;769;40000
+563;Jean-Dominique Leca;;CB;Ajaccio;19;769;40000
+564;Sacha Contena;;GK;Ajaccio;16;769;40000
+565;Bradley Locko;fr FRA;DF;Reims;20;769;40000
+566;Florent Duparchy;;GK;Reims;22;769;40000
+567;Kamory Doumbia;ml MLI;MF;Reims;19;769;40000
+568;Nathanael Mbuku;fr FRA;FWMF;Reims;20;769;40000
+569;Lesley Ugochukwu;fr FRA;MF;Rennes;18;769;40000
+570;Noah Francoise;fr FRA;MF;Rennes;19;769;40000
+571;Benjamin Besic;fr FRA;RM;Strasbourg;20;769;40000
+572;Nordine Kandil;fr FRA;MFFW;Strasbourg;20;769;40000
+573;Dango Ouattara;bf BFA;FWMF;Lorient;20;769;40000
+574;Loïc Affamah;fr FRA;FW;Nantes;20;769;40000
+575;Eliot Matazo;be BEL;MF;Monaco;20;769;40000
+576;Béni Makouana;cg CGO;FWMF;Montpellier;19;577;30000
+577;Matthis Abline;fr FRA;FWMF;Auxerre;19;577;30000
+578;Théo De Percin;mq MTQ;GK;Auxerre;21;577;30000
+579;Jean-Mattéo Bahoya;;AM;Angers;17;577;30000
+580;Yassin Belkhdim;fr FRA;MF;Angers;20;577;30000
+581;Guéla Doué;;RB;Rennes;20;577;30000
+582;Jeanuël Belocian;;CB;Rennes;17;577;30000
+583;Warmed Omari;fr FRA;DF;Rennes;22;577;30000
+584;Alexandre Pierre;ht HAI;GK;Strasbourg;21;577;30000
+585;Teddy Bartouche-Selbonne;gp GLP;GK;Lorient;25;577;30000
+586;Lucas Margueron;fr FRA;GK;Clermont Foot;21;577;30000
+587;Souleymane Cissé;fr FRA;DF;Clermont Foot;19;577;30000
+588;Yanis Massolin;fr FRA;MF;Clermont Foot;19;577;30000
+589;Grégoire Coudert;fr FRA;GK;Brest;23;577;30000
+590;Adrien Louveau;;CB;Lens;23;577;30000
+591;David Pereira da Costa;pt POR;MFFW;Lens;21;577;30000
+592;Teddy Boulhendi;fr FRA;GK;Nice;21;385;20000
+593;Matis Carvalho;pt POR;GK;Montpellier;23;385;20000
+594;Yanis Guermouche;fr FRA;CF;Montpellier;21;385;20000
+595;Thomas Himeur;fr FRA;GK;Toulouse;21;385;20000
+596;Yasser Larouci;dz ALG;DFMF;Troyes;21;385;20000
+597;Salim Ben Seghir;fr FRA;MF;Marseille;19;385;20000
+598;Clément Vidal;fr FRA;DFMF;Ajaccio;22;385;20000
+599;Florian Chabrolle;fr FRA;MF;Ajaccio;24;385;20000
+600;Mounaim El Idrissy;fr FRA;FW;Ajaccio;23;385;20000
+601;Yanis Cimignani;fr FRA;MFDF;Ajaccio;20;385;20000
+602;Aymeric Ahmed;km COM;AM;Strasbourg;18;385;20000
+603;Gor Manvelyan;am ARM;MF;Nantes;20;385;20000
+604;Ouparine Djoco;gw GNB;GK;Clermont Foot;24;385;20000
+605;Ismaëlben Boura;fr FRA;DFFW;Lens;21;385;20000
+606;Mamadou Camara;sn SEN;CM;Lens;20;385;20000
