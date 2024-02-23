@@ -60,8 +60,8 @@ def choix_graphiques():
         ("Poids (en kg)", True, True, "poids"),
         ("Taille (en cm)", True, True, "taille"),
         ("Salaire mensuel (en Millions d'euros)", True, True, "salaire"),
-        ("Buts encaissés", True, True, "buts_e_joueur"),
-        ("Buts Marqués", True, True, "buts_m_joueur"),
+        ("Nombre de buts encaissés", True, True, "buts_e_joueur"),
+        ("Nombre de buts Marqués", True, True, "buts_m_joueur"),
         ("Nombre de matchs joués", True, True, "matchs_j"),
         ("Meilleur pied", False, True, "meilleur pied"),
         ("Nombre de passes décisives", True, True, "pass_d"),
@@ -69,9 +69,9 @@ def choix_graphiques():
         ("Rang (Club)", True, True, "rang"),
         ("Nombre de Victoires (Club)", True, True, "victoires"),
         ("Nombre de Nuls (Club)", True, True, "nuls"),
-        ("Nombre de défaites (Club)", True, True, "defaites"),
-        ("Buts Marqués (Club)", True, True, "buts_m"),
-        ("Buts encaissés (Club)", True, True, "buts_e"),
+        ("Nombre de Défaites (Club)", True, True, "defaites"),
+        ("Nombre de buts Marqués (Club)", True, True, "buts_m"),
+        ("Nombre de buts encaissés (Club)", True, True, "buts_e"),
         ("Date de création du Club", False, True, "date_crea"),
         ("Budget du Club (en Milions d'euros)", True, True, "budget"),
         ("Nombre de titres du Club", True, True, "titres"),
@@ -135,7 +135,6 @@ def choix_graphiques():
             list_abs = list(joueurs_df[elements[abscisse_choisie][3]].value_counts().index)
         else:
             list_abs = list(joueurs_df[elements[abscisse_choisie][3]])
-            print(list_abs)
 
 
     valeurs = []
@@ -194,18 +193,43 @@ def plot_barres(list_abs, valeurs, valeurs_decrs, x_legend, title):
 
     # Créer un axe pour chaque série de données
     axes = [ax] + [ax.twinx() for _ in range(len(valeurs) - 1)]
-
-    # Décaler les axes pour éviter la superposition
-    for i, axe in enumerate(axes[2:], 2):
-        axe.spines['right'].set_position(('outward', 60 * (i - 1)))
+    
+    # axes = [ax] + [ax.twinx() if "nombre" not in legende.lower() else ax for ax, legende in zip(axes, valeurs_decrs)]
 
     list_colors = ["blue", "orange", "green", "red", "purple", "brown", "pink", "gray", "olive", "cyan"]
     # Tracer chaque série de données sur son propre axe
     ct = 0
+    ax_del = []
+    nombre_index = None
     for axe, val, i, legende in zip(axes, valeurs, range(len(valeurs)), valeurs_decrs):
-        axe.bar(x + (i) * width, val, width, label=legende, color=list_colors[i])
-        axe.set_ylabel(legende)
-        ct += 1
+        if "Nombre" in legende:
+            if nombre_index is None:
+                nombre_index = i
+                axe.bar(x + (i) * width, val, width, label=legende, color=list_colors[i])
+                axe.set_ylabel(legende)
+                ct += 1
+            else:          
+                axes[nombre_index].bar(x + (i) * width, val, width, label=legende, color=list_colors[i])
+                old_lab = axes[nombre_index].get_ylabel()
+                print(old_lab)
+                axes[nombre_index].set_ylabel("Nombre")
+                ax_del.append(i)
+        else:
+            axe.bar(x + (i) * width, val, width, label=legende, color=list_colors[i])
+            axe.set_ylabel(legende)
+            ct += 1
+
+    # Décaler les axes pour éviter la superposition
+    for idx_del in ax_del:
+        axes[idx_del].set_visible(False)
+    
+    for idx_del in range(len(ax_del)):
+        del axes[idx_del]
+
+    for i, axe in enumerate(axes[1:]):
+        axe.spines['right'].set_position(('outward', 60 * i))
+
+
 
     # Ajout des labels, titre et légende
     ax.set_xlabel(x_legend)
@@ -248,20 +272,51 @@ def plot_scatter(list_abs, valeurs, valeurs_decrs, x_legend, title):
     # Créer un axe pour chaque série de données
     axes = [ax] + [ax.twinx() for _ in range(len(valeurs) - 1)]
 
-    # Décaler les axes pour éviter la superposition
-    for i, axe in enumerate(axes[2:], 2):
-        axe.spines['right'].set_position(('outward', 60 * (i - 1)))
+
 
     list_colors = ["blue", "orange", "green", "red", "purple", "brown", "pink", "gray", "olive", "cyan"] * 2
     # Tracer chaque série de données sur son propre axe
-    
+
+    ax_del = []
+    nombre_index = None
     for axe, val, i, legende in zip(axes, valeurs, range(len(valeurs)), valeurs_decrs):
-        axe.scatter(list_abs, val, label=legende, color=list_colors[i], s=5)
-        axe.set_ylabel(legende)
+        if "Nombre" in legende:
+            if nombre_index is None:
+                nombre_index = i
+                axe.scatter(list_abs, val, label=legende, color=list_colors[i], s=5)
+                axe.set_ylabel(legende)
+            else:          
+                axes[nombre_index].scatter(list_abs, val, label=legende, color=list_colors[i], s=5)
+                axe.set_ylabel(legende)
+                axes[nombre_index].set_ylabel("Nombre")
+                ax_del.append(i)
+        else:
+            axe.scatter(list_abs, val, label=legende, color=list_colors[i], s=5)
+            axe.set_ylabel(legende)
+    nombre_index = None 
     for axe, val_moy, i, legende in zip(axes, valeurs_moy, range(len(valeurs_moy)), valeurs_decrs):
+        if "Nombre" in legende:
+            if nombre_index is None:
+                nombre_index = i
+                axe.plot(list_abs_moy, val_moy, label=legende + " (Moyenne)", color=list_colors[i])
+            else:          
+                axes[nombre_index].plot(list_abs_moy, val_moy, label=legende + " (Moyenne)", color=list_colors[i])
+                ax_del.append(i)
+        else:
+            axe.plot(list_abs_moy, val_moy, label=legende + " (Moyenne)", color=list_colors[i])
+        
 
-        axe.plot(list_abs_moy, val_moy, label=legende + " (Moyenne)", color=list_colors[i])
 
+     # Décaler les axes pour éviter la superposition
+    for idx_del in ax_del:
+        axes[idx_del].set_visible(False)
+    
+    for idx_del in range(len(ax_del)):
+        del axes[idx_del]
+
+
+    for i, axe in enumerate(axes[1:]):
+        axe.spines['right'].set_position(('outward', 60 * (i)))
     # Ajout des labels, titre et légende
     ax.set_xlabel(x_legend)
     ax.set_title(title)
