@@ -1,58 +1,136 @@
-import matplotlib.pyplot as plt
-import numpy as np
-import pandas
-import pandas as pd
-from rich import print
 import utils
-from rich.console import Console
-from rich.table import Table
 import datetime
+from rich.table import Table
+from rich.console import Console
+from rich import print
+import pandas as pd
+import numpy as np
+import matplotlib.pyplot as plt
+import time
+print("Importation des modules")
+# TODO Ajouter un loader
+# Fichier Perso
 
-#  TODO Interface, ajouter des clear console etc
+# ##########################################################################
+# TODO graphiques scatter quand souris sur point, afficher joueur
+# TODO Message d'élargissement du terminal (Elargir jusqu'a ce qu'une ligne tienne complètement)
+# TODO Interface, ajouter des clear console etc
+# ##########################################################################
+
+# Constantes
+HEADER = """
+ _  _      _  ___            _   
+| \| | ___(_)| __| ___  ___ | |_ 
+| .  |(_-/| || _| / _ \/ _ \|  _|
+|_|\_|/__/|_||_|  \___/\___/ \__|
+
+Programme de présentation de statistiques de la ligue 1 pour 2023
+"""
+# Options en ascii art
+MAIN_OPTIONS = """
+   .....                                                                        
+ ..     ..                        _______                    |              __  
+.         .                      |   1   |                   |        /    |  | 
+ ..     ..               _______ |       |                   |       / __  |  | 
+   ..... ..             |   2   ||       | _______           |  /\  / |  | |  | 
+          ...           |       ||       ||   3   |          | /  \/  |  | |  | 
+            ..          |       ||       ||       |          |/_______|__|_|__|_
+
+1. Rechercher           2. Afficher des classements          3. Afficher        
+ (joueur/équipe)                                                des graphiques  
+
+"""
+
+MAIN_OPTION_SEARCH = """
+         _____
+  _____ |  1  |
+ |  2  ||     | _____     
+ |     ||     ||  3  |
+
+2. Afficher des
+           classements
+"""
+MAIN_OPTION_SEARCH = """
+|              __
+|        /    |  |
+|       / __  |  |
+|  /\  / |  | |  |
+| /  \/  |  | |  |
+|/_______|__|_|__|__
+
+3. Afficher des 
+             graphiques
+"""
+
 # Charger les données des fichiers CSV
 clubs_df = pd.read_csv("clubs.csv", delimiter=';')
-clubs_df[["date_crea"]] = clubs_df[["date_crea"]].astype(str)
 joueurs_df = pd.read_csv("joueurs.csv", delimiter=';')
-# joueurs_df.columns = [col + "_joueur" for col in joueurs_df.columns]
+
+# Ajouter des variables fabriquées
+clubs_df["rendement"] = 1 / (clubs_df["rang"] * clubs_df["budget"])
+clubs_df["domination"] = (100 * clubs_df["titres"]) / \
+    (2023 - clubs_df["date_crea"])
+
+# Modification du type de la date de création en str pour l'affichage dans les graphiques
+clubs_df[["date_crea"]] = clubs_df[["date_crea"]].astype(str)
+
+
+# Merge du df joueurs avec celui club
+
+# Pour Ajouter "_club" à toutes les colonnes ayant été mergées
 col_origin = list(joueurs_df.columns)
+
+# Merge
 joueurs_df = pd.merge(joueurs_df, clubs_df, left_on='club',
                       right_on='id', how='left', suffixes=('_joueur', '_club'))
+
+# Renommage des colonnes
 cols_nw = list(joueurs_df.columns)
 for col in cols_nw:
     if col not in col_origin:
         if not col.endswith("_club"):
             if not col.endswith("_joueur"):
                 joueurs_df.rename(columns={col: col + "_club"}, inplace=True)
-# On prend 2023 étant donné que l'on possède les données pour la saison 2022-2023
+
+
+# Création de la variable âge du joueur (pour l'année 2023)
 joueurs_df.insert(0, "age", joueurs_df.apply(
     lambda jx: 2023 - int(jx["birthdate"][:4]), axis=1))
+
+# Création de la variable contenant à la fois le nom et le prénom à es fins de tri par ordre alphabétique
 joueurs_df.insert(0, "nom_prenom", joueurs_df.apply(
     lambda jx: f"{jx['nom']} {jx['prenom']}", axis=1))
+
+# Tri par ordre alphabétique + remise à zero de l'index après le tri
 joueurs_df.sort_values(by="nom_prenom", inplace=True)
 joueurs_df.reset_index(drop=True, inplace=True)
 
-def main():
+
+def main(message=""):
     """Menu principal"""
-    print("""[bold]Menu principal[/bold]
-        1. Rechercher un joueur ou une équipe
-        2. Afficher un classement
-        3. Afficher des graphiques avec Matplotlib""")
-    first_choice = input("Entrez votre choix : ")
+    # Afficher le menu principal
+    first_choice = utils.show_banner("Menu principal", "Veuillez choisir une option", emplacement="Menu",
+                                     header=HEADER, footer=MAIN_OPTIONS, demande="Entrez votre choix (Ctrl+C pour quitter): ", alerte=message)
+    # Récupérer les choix
     if first_choice == "1":
         rechercher()
     elif first_choice == "2":
         afficher_classements()
     elif first_choice == "3":
-        choix_graphiques()
+        choix_construction_graphique()
     else:
-        print("Choix invalide. Veuillez réessayer.")
+        main("Choix invalide.")
 
 
 def afficher_classements():
     """Afficher les classements"""
     print("classements")
 
-def choix_graphiques():
+
+def choix_construction_graphique(message=""):
+    """Menu pour choisir entre des graphiques recommandés ou des graphiques personnalisés"""
+
+    # Elements transmis pour les graphiques personnalisés
     elements = [
         ("Nom du joueur", False, True, "nom_prenom"),
         ("Poste", False, True, "poste"),
@@ -77,89 +155,167 @@ def choix_graphiques():
         ("Nombre de titres du Club", True, True, "titres"),
     ]
 
+    # Liste des graphiques recommandés
+    # (Nom, Paramètre en abscisse, Paramètres en ordonnée)
+    graphiques_recommandes = [
+        ("1. Nombre de buts marqués par club", 11, [16]),
+        ("2. Salaire moyen d'un joueur & Nombre de buts moyen marqués en fonction de son poste", 1, [
+         5, 7]),
+        ("3. Poids des joueurs en fonction de leur taille", 3, [4]),
+        ("4. Graphiques personnalisés", [], []),
+    ]
+
+    # On crée l'affichage des otpions
+    options_print = ""
+    for nom, _, _ in graphiques_recommandes:
+        options_print += f"{nom}\n"
+
+    choix = utils.show_banner("Graphiques", "Veuillez choisir une option", emplacement="Menu > Graphiques",
+                              footer=options_print, frich=True, demande="Entrez votre choix (c pour revenir en arrière): ", alerte=message)
+
+    # Récupérer les choix
+    try:
+        int_choice = int(choix)
+        tup_choix = graphiques_recommandes[int_choice - 1]
+        if tup_choix[1] == []:
+            # On envoie à la consruction de graphiques personnalisés
+            composition_graphique(elements)
+        else:
+            # On envoie les éléments pour la construction du graphique
+            compute_graphiques(elements, tup_choix[1], tup_choix[2])
+            # TODO Boucler
+    except (ValueError, IndexError):
+        if choix == "c":
+            main()
+        else:
+            choix_construction_graphique("Choix invalide.")
+
+
+def composition_graphique(elements: list):
+    """Menu de composition de graphique personnalisé"""
+    utils.show_banner("Graphiques Personnalisés", "Veuillez choisir une option",
+                      emplacement="Menu > Graphiques > Graphique Personnalisé")
     ordonnes_choisies = []
     abscisse_choisie = None
     message = ""
+
+    # Boucle de demande des paramètres
     while True:
         # TODO clear console
-        print("Choisissez vos paramètres")
-        print("[red][bold]*[/bold]: Paramètres disponibles uniquement en Abscisses[/red]")
+        print(
+            "[red][bold]*[/bold]: Paramètres disponibles uniquement en Abscisses[/red]")
+        # On affiche la liste de paramètres
         for index, param in enumerate(elements):
             if not param[1]:
+                # Affichage de l'étoile si le paramètre n'est pas autorisé en ordonnée
                 print(f"{index + 1}. {param[0]}[red]*[/red]")
             else:
                 print(f"{index + 1}. {param[0]}")
+
+        # Affichage du message d'erreur avant celui de la demande
         print(f"[bold][red]{message}[/red][/bold]")
-        if len(ordonnes_choisies) == 0:
-            ordonnees = input("Entrez vos paramètres à mettre en ordonnée (Séparés par un espace): ").strip().split(' ')
+
+        if len(ordonnes_choisies) == 0:  # Demande des paramètres en ordonnée
+            ordonnees = input(
+                "Entrez vos paramètres à mettre en ordonnée (Séparés par un espace): ").strip().split(' ')
             if len(ordonnees) == 0:
                 message = "Veuillez entrer au moins un paramètre"
             else:
+                # Vérificaton pour chaque paramètre entré en ordonnée
                 for idx_input, inputs_ords_text in enumerate(ordonnees):
                     try:
+                        # On essaye de convertir en nombre
                         inputs_ords = int(inputs_ords_text)
+
+                        # On vérifie que le paramètre est autorisé en ordonnée
                         if not elements[inputs_ords - 1][1]:
                             message = f"Le paramètre n°{idx_input + 1} n'est pas autorisé en ordonnée"
                             ordonnes_choisies = []
                             break
+
+                        # Si on arrive ici c'est que tout est bon, on ajoute le paramètre à la liste
                         ordonnes_choisies.append(inputs_ords - 1)
                         message = ""
+
                     except (ValueError, IndexError):
+                        # Si on arrive ici c'est que le paramètre n'est pas valide, on vide la liste et on recommence
                         message = f"Le paramètre n°{idx_input + 1} n'est pas valide"
                         ordonnes_choisies = []
                         break
-        else:
-            abscisses = input("Entrez le paramètre à mettre en abscisses: ").strip()
+
+        else:  # Demande du paramètre en abscisse
+            abscisses = input(
+                "Entrez le paramètre à mettre en abscisses: ").strip()
 
             try:
+                # On essate de convertir l'entrée en nombre
                 inputs_abs = int(abscisses)
+
+                # Vérification que le paramètre est dans la liste des paramètres
                 _ = elements[inputs_abs - 1][2]
+
+                # Vérification que le paramètre n'est pas déjà en ordonnée
                 assert inputs_abs - 1 not in ordonnes_choisies
+
+                # Si on est ici, tout est bon, on sauvegarde le paramètre
                 abscisse_choisie = inputs_abs - 1
-            except (ValueError, IndexError):
+            except (ValueError, IndexError):  # Erreurs
                 message = "Le paramètre entré n'est pas valide"
                 abscisse_choisie = None
-            except AssertionError:
+            except AssertionError:  # Erreurs
                 message = "Le paramètre entré est déjà en ordonnée"
                 abscisse_choisie = None
 
+        # Si tout à été choisi, on sort de la boucle, sinon on reboucle
         if len(ordonnes_choisies) > 0 and abscisse_choisie is not None:
             break
 
-    
-    
-    if "Club" in elements[abscisse_choisie][0]: # Si c'est une statistique club
+    # On envoie les éléments pour la construction du graphique
+    compute_graphiques(elements, abscisse_choisie, ordonnes_choisies)
+
+
+def compute_graphiques(elements, abscisse_choisie, ordonnes_choisies):
+    """Créer les listes de valeurs des graphiques"""
+    # TODO clear console
+    # TODO ajouter un loader
+    print("Préparation de votre graphique")
+    if "Club" in elements[abscisse_choisie][0]:  # Si c'est une statistique club
         list_abs = list(clubs_df[elements[abscisse_choisie][3]])
     else:
         if elements[abscisse_choisie][3] in ["poste", "meilleur pied", "date_crea"]:
-            list_abs = list(joueurs_df[elements[abscisse_choisie][3]].value_counts().index)
+            list_abs = list(
+                joueurs_df[elements[abscisse_choisie][3]].value_counts().index)
         else:
             list_abs = list(joueurs_df[elements[abscisse_choisie][3]])
-
 
     valeurs = []
     descrs_valeurs = []
     arrondi = 50
     for ord_choisie in ordonnes_choisies:
-        if "Club" not in elements[ord_choisie][0]: # Si c'est une statistique joueur
-            if "Club" in elements[abscisse_choisie][0]: # Si c'est une statistique club
+        # Si c'est une statistique joueur
+        if "Club" not in elements[ord_choisie][0]:
+            # Si c'est une statistique club
+            if "Club" in elements[abscisse_choisie][0]:
                 # Calculer la moyenne des statistiques des joueurs pour chaque club
                 moyennes = []
                 for club in clubs_df[elements[abscisse_choisie][3]]:
-                    moyennes.append(round(joueurs_df[joueurs_df[elements[abscisse_choisie][3] + "_club"] == club][elements[ord_choisie][3]].mean(), arrondi))
+                    moyennes.append(round(
+                        joueurs_df[joueurs_df[elements[abscisse_choisie][3] + "_club"] == club][elements[ord_choisie][3]].mean(), arrondi))
                 valeurs.append(moyennes)
                 descrs_valeurs.append(elements[ord_choisie][0] + " (Moyenne)")
-            
+
             else:
                 # TODO Condition pour sélectionner les joueurs
                 if elements[abscisse_choisie][3] in ["poste", "meilleur pied"]:
                     moyennes = []
                     for elem in list_abs:
-                        moyennes.append(round(joueurs_df[joueurs_df[elements[abscisse_choisie][3]] == elem][elements[ord_choisie][3]].mean(), arrondi))
+                        moyennes.append(round(
+                            joueurs_df[joueurs_df[elements[abscisse_choisie][3]] == elem][elements[ord_choisie][3]].mean(), arrondi))
 
                     valeurs.append(moyennes)
-                    descrs_valeurs.append(elements[ord_choisie][0] + " (Moyenne)")
-               
+                    descrs_valeurs.append(
+                        elements[ord_choisie][0] + " (Moyenne)")
+
                 else:
                     valeurs.append(list(joueurs_df[elements[ord_choisie][3]]))
                     descrs_valeurs.append(elements[ord_choisie][0])
@@ -169,34 +325,38 @@ def choix_graphiques():
                 valeurs.append(list(clubs_df[elements[ord_choisie][3]]))
                 descrs_valeurs.append(elements[ord_choisie][0])
             else:
-                valeurs.append(list(joueurs_df[elements[ord_choisie][3] + "_club"]))
+                valeurs.append(
+                    list(joueurs_df[elements[ord_choisie][3] + "_club"]))
                 descrs_valeurs.append(elements[ord_choisie][0])
 
-    
-    graphiques_plot(list_abs, valeurs, descrs_valeurs, elements[abscisse_choisie][0], "Mon Titre")    
+    graphiques_plot(list_abs, valeurs, descrs_valeurs,
+                    elements[abscisse_choisie][0], "Mon Titre")  # TODO Ajouter un vrai titre
 
 
 def graphiques_plot(list_abs, valeurs, valeurs_decrs, x_legend, title):
     if type(list_abs[0]) == str:
         plot_barres(list_abs, valeurs, valeurs_decrs, x_legend, title)
     else:
-        plot_scatter(list_abs, valeurs, valeurs_decrs, x_legend, title)      
+        plot_scatter(list_abs, valeurs, valeurs_decrs, x_legend, title)
+
 
 def plot_barres(list_abs, valeurs, valeurs_decrs, x_legend, title):
     for idx_val, val_list in enumerate(valeurs):
-        _, valeurs[idx_val] = zip(*sorted(zip(list_abs, val_list), key=lambda x: x[0]))
+        _, valeurs[idx_val] = zip(
+            *sorted(zip(list_abs, val_list), key=lambda x: x[0]))
     list_abs = sorted(list_abs)
-    x = np.arange(len(list_abs)) # localisation des labels
+    x = np.arange(len(list_abs))  # localisation des labels
     width = 0.2  # largeur des barres
 
     fig, ax = plt.subplots()
 
     # Créer un axe pour chaque série de données
     axes = [ax] + [ax.twinx() for _ in range(len(valeurs) - 1)]
-    
+
     # axes = [ax] + [ax.twinx() if "nombre" not in legende.lower() else ax for ax, legende in zip(axes, valeurs_decrs)]
 
-    list_colors = ["blue", "orange", "green", "red", "purple", "brown", "pink", "gray", "olive", "cyan"]
+    list_colors = ["blue", "orange", "green", "red",
+                   "purple", "brown", "pink", "gray", "olive", "cyan"]
     # Tracer chaque série de données sur son propre axe
     ct = 0
     ax_del = []
@@ -205,31 +365,32 @@ def plot_barres(list_abs, valeurs, valeurs_decrs, x_legend, title):
         if "Nombre" in legende:
             if nombre_index is None:
                 nombre_index = i
-                axe.bar(x + (i) * width, val, width, label=legende, color=list_colors[i])
+                axe.bar(x + (i) * width, val, width,
+                        label=legende, color=list_colors[i])
                 axe.set_ylabel(legende)
                 ct += 1
-            else:          
-                axes[nombre_index].bar(x + (i) * width, val, width, label=legende, color=list_colors[i])
+            else:
+                axes[nombre_index].bar(
+                    x + (i) * width, val, width, label=legende, color=list_colors[i])
                 old_lab = axes[nombre_index].get_ylabel()
                 print(old_lab)
                 axes[nombre_index].set_ylabel("Nombre")
                 ax_del.append(i)
         else:
-            axe.bar(x + (i) * width, val, width, label=legende, color=list_colors[i])
+            axe.bar(x + (i) * width, val, width,
+                    label=legende, color=list_colors[i])
             axe.set_ylabel(legende)
             ct += 1
 
     # Décaler les axes pour éviter la superposition
     for idx_del in ax_del:
         axes[idx_del].set_visible(False)
-    
+
     for idx_del in range(len(ax_del)):
         del axes[idx_del]
 
     for i, axe in enumerate(axes[1:]):
         axe.spines['right'].set_position(('outward', 60 * i))
-
-
 
     # Ajout des labels, titre et légende
     ax.set_xlabel(x_legend)
@@ -237,7 +398,9 @@ def plot_barres(list_abs, valeurs, valeurs_decrs, x_legend, title):
     ax.set_xticks(x + ((ct - 1) * width / 2))
     ax.set_xticklabels(list_abs)
 
-    fig.legend(loc="upper left", bbox_to_anchor=(0,1), bbox_transform=ax.transAxes)
+    fig.legend(loc="upper left", bbox_to_anchor=(
+        0, 1), bbox_transform=ax.transAxes)
+
     def on_resize(_):
         fig.tight_layout()
         fig.canvas.draw()
@@ -246,11 +409,13 @@ def plot_barres(list_abs, valeurs, valeurs_decrs, x_legend, title):
 
     plt.gcf().autofmt_xdate()
     plt.show()
-    
+
+
 def plot_scatter(list_abs, valeurs, valeurs_decrs, x_legend, title):
-    
+
     for idx_val, val_list in enumerate(valeurs):
-        _, valeurs[idx_val] = zip(*sorted(zip(list_abs, val_list), key=lambda x: x[0]))
+        _, valeurs[idx_val] = zip(
+            *sorted(zip(list_abs, val_list), key=lambda x: x[0]))
     list_abs = sorted(list_abs)
 
     valeurs_moy = []
@@ -272,9 +437,8 @@ def plot_scatter(list_abs, valeurs, valeurs_decrs, x_legend, title):
     # Créer un axe pour chaque série de données
     axes = [ax] + [ax.twinx() for _ in range(len(valeurs) - 1)]
 
-
-
-    list_colors = ["blue", "orange", "green", "red", "purple", "brown", "pink", "gray", "olive", "cyan"] * 2
+    list_colors = ["blue", "orange", "green", "red", "purple",
+                   "brown", "pink", "gray", "olive", "cyan"] * 2
     # Tracer chaque série de données sur son propre axe
 
     ax_del = []
@@ -283,37 +447,40 @@ def plot_scatter(list_abs, valeurs, valeurs_decrs, x_legend, title):
         if "Nombre" in legende:
             if nombre_index is None:
                 nombre_index = i
-                axe.scatter(list_abs, val, label=legende, color=list_colors[i], s=5)
+                axe.scatter(list_abs, val, label=legende,
+                            color=list_colors[i], s=5)
                 axe.set_ylabel(legende)
-            else:          
-                axes[nombre_index].scatter(list_abs, val, label=legende, color=list_colors[i], s=5)
+            else:
+                axes[nombre_index].scatter(
+                    list_abs, val, label=legende, color=list_colors[i], s=5)
                 axe.set_ylabel(legende)
                 axes[nombre_index].set_ylabel("Nombre")
                 ax_del.append(i)
         else:
-            axe.scatter(list_abs, val, label=legende, color=list_colors[i], s=5)
+            axe.scatter(list_abs, val, label=legende,
+                        color=list_colors[i], s=5)
             axe.set_ylabel(legende)
-    nombre_index = None 
+    nombre_index = None
     for axe, val_moy, i, legende in zip(axes, valeurs_moy, range(len(valeurs_moy)), valeurs_decrs):
         if "Nombre" in legende:
             if nombre_index is None:
                 nombre_index = i
-                axe.plot(list_abs_moy, val_moy, label=legende + " (Moyenne)", color=list_colors[i])
-            else:          
-                axes[nombre_index].plot(list_abs_moy, val_moy, label=legende + " (Moyenne)", color=list_colors[i])
+                axe.plot(list_abs_moy, val_moy, label=legende +
+                         " (Moyenne)", color=list_colors[i])
+            else:
+                axes[nombre_index].plot(
+                    list_abs_moy, val_moy, label=legende + " (Moyenne)", color=list_colors[i])
                 ax_del.append(i)
         else:
-            axe.plot(list_abs_moy, val_moy, label=legende + " (Moyenne)", color=list_colors[i])
-        
-
+            axe.plot(list_abs_moy, val_moy, label=legende +
+                     " (Moyenne)", color=list_colors[i])
 
      # Décaler les axes pour éviter la superposition
     for idx_del in ax_del:
         axes[idx_del].set_visible(False)
-    
+
     for idx_del in range(len(ax_del)):
         del axes[idx_del]
-
 
     for i, axe in enumerate(axes[1:]):
         axe.spines['right'].set_position(('outward', 60 * (i)))
@@ -321,18 +488,18 @@ def plot_scatter(list_abs, valeurs, valeurs_decrs, x_legend, title):
     ax.set_xlabel(x_legend)
     ax.set_title(title)
 
-    fig.legend(loc="upper left", bbox_to_anchor=(0,1), bbox_transform=ax.transAxes)
-    
+    fig.legend(loc="upper left", bbox_to_anchor=(
+        0, 1), bbox_transform=ax.transAxes)
+
     def on_resize(_):
         fig.tight_layout()
         fig.canvas.draw()
     _ = fig.canvas.mpl_connect('resize_event', on_resize)
     plt.tight_layout()
 
-    
     plt.gcf().autofmt_xdate()
     plt.show()
-   
+
 
 def rechercher():
     """Rechercher un joueur ou une équipe"""
@@ -390,7 +557,7 @@ def rechercher():
             print("Choix invalide.")
 
 
-def show_stats(element: pandas.Series, type: str):
+def show_stats(element: pd.Series, type: str):
     """Afficher les statistiques d'un joueur ou d'une équipe"""
     console = Console()
     table = Table(title="Statistiques")
@@ -400,22 +567,38 @@ def show_stats(element: pandas.Series, type: str):
 
 
 def compute_recherche(recherche: str):
+    """Permet de rechercher un joueur ou une équipe de façon plutôt efficace"""
+    # Seuil de tolérance de ressemblance
     seuil = 0.7
+    # On copie les df pour ne pas les modifier
     joueurs_recherche = joueurs_df.copy(deep=True)
     clubs_recherche = clubs_df.copy(deep=True)
-    if " " in recherche:
+
+    if " " in recherche: # Si le nom est complet (nom et prénom)
+        # TODO Regrouper en un seule .insert(.apply()...) (avec le max sur les deux similar)
+        # On ajoute 2 colonnes qui contiennent en score de ressemblance
+        
+        # Avec le nom avant le prénom
         joueurs_recherche.insert(0, "nom_prenom_score",
                                  joueurs_df.apply(lambda x: utils.similar(f'{x["nom"]} {x["prenom"]}', recherche),
                                                   axis=1))
+        
+        # Avec le nom après le prénom
         joueurs_recherche.insert(0, "prenom_nom_score",
                                  joueurs_df.apply(lambda x: utils.similar(f'{x["prenom"]} {x["nom"]}', recherche),
                                                   axis=1))
+        
+        # On ne garde que les joueurs qui ont un des 2 scores de ressemblance supérieur au seuil pour éviter de surcharger les étapes suivantes
         joueurs_recherche = joueurs_recherche[
             (joueurs_recherche['prenom_nom_score'] > seuil) | (joueurs_recherche['nom_prenom_score'] > seuil)]
+        
+        # On établit comme score le score le plus élevé
         joueurs_recherche.insert(0, "score", joueurs_recherche.apply(
             lambda row: max(row["nom_prenom_score"], row["prenom_nom_score"]), axis=1))
 
-    else:
+    else: # Si le nom est incomplet (nom ou prénom)
+        # On effectue le même procédé
+        # TODO commenter et réduire
 
         joueurs_recherche.insert(0, "nom_score",
                                  joueurs_df.apply(lambda x: utils.similar(f'{x["nom"]}', recherche), axis=1))
@@ -427,6 +610,7 @@ def compute_recherche(recherche: str):
                                  joueurs_recherche.apply(lambda row: max(row["prenom_score"], row["nom_score"]),
                                                          axis=1))
 
+    # TODO Commenter et réduire
     # Recherche dans les clubs
     clubs_recherche.insert(0, "score_nom_complet",
                            clubs_recherche.apply(lambda x: utils.similar(f'{x["name"]}', recherche), axis=1))
@@ -440,6 +624,7 @@ def compute_recherche(recherche: str):
     clubs_recherche.insert(0, "score", clubs_recherche.apply(
         lambda row: max(max(row["score_nom_complet"], row["score_short_name"]), row["score_villes"]), axis=1))
 
+    # On trie les résultats par score et on réinitialise l'index
     joueurs_recherche.sort_values(by="score", ascending=False, inplace=True)
     clubs_recherche.sort_values(by="score", ascending=False, inplace=True)
 
@@ -472,5 +657,6 @@ def compute_recherche(recherche: str):
     return joueurs_recherche, clubs_recherche
 
 
-while True:
-    choix_graphiques()
+if __name__ == "__main__":
+    while True:
+        main()
