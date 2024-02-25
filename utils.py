@@ -10,14 +10,21 @@ from unidecode import unidecode
 import os
 import rich
 
+
 def similar(a, b):
     """ Similarité de 2 textes"""
     return SequenceMatcher(None, unidecode(a.lower()), unidecode(b.lower())).ratio()
 
-def show_banner(title: str, subtitle="", emplacement="", header="", footer="", demande="", alerte="", hrich=False, frich=False):
-    # Vider le terminal 
+
+def clear_console():
     os.system('cls' if os.name == 'nt' else 'clear')
-    
+
+
+def show_banner(title: str, subtitle="", emplacement="", header="", footer="", demande="", alerte="", hrich=False,
+                frich=False):
+    # Vider le terminal 
+    clear_console()
+
     if hrich:
         rich.print(header)
     else:
@@ -25,7 +32,8 @@ def show_banner(title: str, subtitle="", emplacement="", header="", footer="", d
 
     # Récupérer la taille du terminal
     term_size = os.get_terminal_size()
-    w, h = term_size.columns, term_size.lines
+    w = term_size.columns
+
     # Afficher le titre
     print(f"{'=' * w}\n")
     rich.print(f"[bold]{title.center(w)}[/bold]")
@@ -35,15 +43,14 @@ def show_banner(title: str, subtitle="", emplacement="", header="", footer="", d
         print(f"{'=' * w}")
     else:
         print(f"\n{'=' * w}")
-    
+
     if frich:
         rich.print(footer)
     else:
         print(footer)
-    
+
     if demande != "":
         rich.print(f"[bold][red]{alerte}[/red][/bold]")
-        return input(demande)
+        return input(demande).strip()
     else:
         return None
-    
