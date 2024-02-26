@@ -16,6 +16,15 @@ def similar(a, b):
     return SequenceMatcher(None, unidecode(a.lower()), unidecode(b.lower())).ratio()
 
 
+def term_size():
+    """Récupérer la taille du terminal"""
+    try:
+        ts = os.get_terminal_size()
+        return ts.columns, ts.lines
+    except:
+        return 80, 24
+
+
 def clear_console():
     os.system('cls' if os.name == 'nt' else 'clear')
 
@@ -31,8 +40,7 @@ def show_banner(title: str, subtitle="", emplacement="", header="", footer="", d
         print(header)
 
     # Récupérer la taille du terminal
-    term_size = os.get_terminal_size()
-    w = term_size.columns
+    w, _ = term_size()
 
     # Afficher le titre
     print(f"{'=' * w}\n")

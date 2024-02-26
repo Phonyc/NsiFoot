@@ -1,4 +1,6 @@
 pandas
-python
 rich
 unidecode
+
+matplotlib
+numpy
