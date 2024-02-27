@@ -54,20 +54,3 @@ def show_banner(title: str, subtitle="", emplacement="", header="", footer="", d
         return input(demande).strip()
     else:
         return None
-
-
-PURPLE = '\033[95m'
-CYAN = '\033[96m'
-DARKCYAN = '\033[36m'
-BLUE = '\033[94m'
-GREEN = '\033[92m'
-YELLOW = '\033[93m'
-RED = '\033[91m'
-BOLD = '\033[1m'
-UNDERLINE = '\033[4m'
-END = '\033[0m'
-
-print("\033[1;31m" + "Votre texte ici" + "\033[0m")
-print("\033[31m" + "Votre texte ici" + "\033[0m")
-print("\033[31m" + "Votre texte ici" + "\033[0m")
-print("\033[1;31m*\033[0;31m: Paramètres disponibles uniquement en Abscisses\033[0m")
