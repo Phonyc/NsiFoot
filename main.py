@@ -1,11 +1,11 @@
 import matplotlib.pyplot as plt
 import numpy as np
 import pandas as pd
-import rich
 import utils
 
 # TODO ajouter les relégations etc
 # Constantes
+
 HEADER = """
  _  _      _  ___            _   
 | \| | ___(_)| __| ___  ___ | |_ 
@@ -24,7 +24,7 @@ MAIN_OPTIONS = """
           ...           |       ||       ||   3   |          | /  \/  |  | |  | 
             ..          |       ||       ||       |          |/_______|__|_|__|_
 
-1. Rechercher           2. Afficher des classements          3. Afficher        
+\033[96m1\033[0m. Rechercher           \033[96m2\033[0m. Afficher des classements          \033[96m3\033[0m. Afficher        
  (joueur/équipe)                                                des graphiques  
 
 """
@@ -52,7 +52,8 @@ joueurs_df = pd.read_csv("joueurs.csv", delimiter=';')
 
 # Ajouter des variables fabriquées
 clubs_df["rendement"] = 1 / (clubs_df["rang"] * clubs_df["budget"])
-clubs_df["domination"] = ((100 * clubs_df["titres"]) / (2023 - clubs_df["date_crea"]))
+clubs_df["domination"] = ((100 * clubs_df["titres"]) /
+                          (2023 - clubs_df["date_crea"]))
 
 # Modification du type de la date de création en str pour l'affichage dans les graphiques
 clubs_df[["date_crea"]] = clubs_df[["date_crea"]].astype(str)
@@ -73,10 +74,12 @@ for col in cols_nw:
         joueurs_df.rename(columns={col: col + "_club"}, inplace=True)
 
 # Création de la variable âge du joueur (pour l'année 2023)
-joueurs_df.insert(0, "age", joueurs_df.apply(lambda jx: 2023 - int(jx["birthdate"][:4]), axis=1))
+joueurs_df.insert(0, "age", joueurs_df.apply(
+    lambda jx: 2023 - int(jx["birthdate"][:4]), axis=1))
 
-# Création de la variable contenant à la fois le nom et le prénom à es fins de tri par ordre alphabétique
-joueurs_df.insert(0, "nom_prenom", joueurs_df.apply(lambda jx: f"{jx['nom']} {jx['prenom']}", axis=1))
+# Création de la variable contenant à la fois le nom et le prénom à des fins de tri par ordre alphabétique
+joueurs_df.insert(0, "nom_prenom", joueurs_df.apply(
+    lambda jx: f"{jx['nom']} {jx['prenom']}", axis=1))
 
 # Tri par ordre alphabétique + remise à zero de l'index après le tri
 joueurs_df.sort_values(by="nom_prenom", inplace=True)
@@ -108,7 +111,8 @@ def choix_classements(message=""):
                      ("salaire", "Salaire (en M€)"),
                      ("buts_m_joueur", "Nombre de buts marqués"),
                      ("pass_d", "Nombre de passes décisives"),
-                     ("buts_e_joueur", "Nombre de buts encaissés"), ("matchs_j", "Nombre de matchs joués"),
+                     ("buts_e_joueur", "Nombre de buts encaissés"), ("matchs_j",
+                                                                     "Nombre de matchs joués"),
                      ]
     elems_clubs = [("date_crea", "Date de création"), ("rang", "Rang (+ relégations)"), ("budget", "Budget (en M€)"),
                    ("titres", "Nombre de titres"),
@@ -120,17 +124,17 @@ def choix_classements(message=""):
                    ("rendement", "Rendement"),
                    ("domination", "Domination")]
 
-    options_print = "[red]Classements des joueurs[/red]\n"
+    options_print = "\033[31mClassements des joueurs\033[0m\n"
     for index_class, classement_elem in enumerate(elems_joueurs):
-        options_print += f"{index_class + 1}. {classement_elem[1]}\n"
+        options_print += f"\033[96m{index_class + 1}\033[0m. {classement_elem[1]}\n"
 
-    options_print += "\n[red]Classements des clubs[/red]\n"
+    options_print += "\n\033[31mClassements des clubs\033[0m\n"
     for index_class, classement_elem in enumerate(elems_clubs):
-        options_print += f"{len(elems_joueurs) + index_class + 1}. {classement_elem[1]}\n"
+        options_print += f"\033[96m{len(elems_joueurs) + index_class + 1}\033[0m. {classement_elem[1]}\n"
 
     choix = utils.show_banner("Classement", "Entrez un paramètre par lequel classer les joueurs / les équipes",
                               emplacement="Menu > Classements",
-                              footer=options_print, frich=True,
+                              footer=options_print,
                               demande="Entrez votre choix (c pour revenir en arrière): ", alerte=message)
 
     # Récupérer les choix
@@ -141,7 +145,8 @@ def choix_classements(message=""):
             afficher_classements(joueurs_df, elems_joueurs[int_choice - 1])
             choix_classements()
         else:
-            afficher_classements(clubs_df, elems_clubs[int_choice - len(elems_joueurs) - 1])
+            afficher_classements(
+                clubs_df, elems_clubs[int_choice - len(elems_joueurs) - 1])
             choix_classements()
     except (ValueError, IndexError):
         if choix == "c":
@@ -161,22 +166,24 @@ def afficher_classements(df, elem, all=False):
     # Remplir la table
     table = ""
 
-    sorted_df = df.sort_values(by=elem[0], ascending=elem[0] in ["rang"]).reset_index(drop=True)
+    sorted_df = df.sort_values(by=elem[0], ascending=elem[0] in [
+                               "rang"]).reset_index(drop=True)
     if all:
         for index, row in sorted_df.iterrows():
-            table += f"{(str(index + 1) + '.').ljust(3)} {row[col_name].ljust(max_len)} : {row[elem[0]]}\n"
+            table += f"\033[36m{(str(index + 1) + '.').ljust(3)}\033[0m {row[col_name].ljust(max_len)} : \033[96m{row[elem[0]]}\033[0m\n"
     else:
         for index, row in sorted_df.head(10).iterrows():
-            table += f"{(str(index + 1) + '.').ljust(3)} {row[col_name].ljust(max_len)} : {row[elem[0]]}\n"
-        table += "\n...\n\n"
+            table += f"\033[36m{(str(index + 1) + '.').ljust(3)}\033[0m {row[col_name].ljust(max_len)} : \033[96m{row[elem[0]]}\033[0m\n"
+        table += "\n\033[33m...\033[0m\n\n"
         for index, row in sorted_df.tail(10).iterrows():
-            table += f"{(str(index + 1) + '.').ljust(3)} {row[col_name].ljust(max_len)} : {row[elem[0]]}\n"
+            table += f"\033[36m{(str(index + 1) + '.').ljust(3)}\033[0m {row[col_name].ljust(max_len)} : \033[96m{row[elem[0]]}\033[0m\n"
 
     # On affiche la table
-    subt = ("Classement des equipes par " if col_name == "name" else "Classement des joueurs par ") + elem[1]
+    subt = ("Classement des equipes par " if col_name ==
+            "name" else "Classement des joueurs par ") + elem[1]
     choix = utils.show_banner("Classement", subt,
                               emplacement="Menu > Classements > Classement",
-                              footer=table, frich=True,
+                              footer=table,
                               demande="Appuyez Entrée pour continuer (* puis Entrée pour tout afficher) :")
     if choix == "*":
         afficher_classements(df, elem, True)
@@ -194,27 +201,30 @@ def choix_construction_graphique(message=""):
                 ("Nombre de buts encaissés", True, True, "buts_e_joueur"),
                 ("Nombre de buts Marqués", True, True, "buts_m_joueur"),
                 ("Nombre de matchs joués", True, True, "matchs_j"),
-                ("Meilleur pied", False, True, "meilleur pied"), ("Nombre de passes décisives", True, True, "pass_d"),
+                ("Meilleur pied", False, True,
+                 "meilleur pied"), ("Nombre de passes décisives", True, True, "pass_d"),
                 ("Club", False, True, "name"), ("Rang (Club)", True, True, "rang"),
-                ("Nombre de Victoires (Club)", True, True, "victoires"), ("Nombre de Nuls (Club)", True, True, "nuls"),
+                ("Nombre de Victoires (Club)", True, True,
+                 "victoires"), ("Nombre de Nuls (Club)", True, True, "nuls"),
                 ("Nombre de Défaites (Club)", True, True, "defaites"),
                 ("Nombre de buts Marqués (Club)", True, True, "buts_m"),
                 ("Nombre de buts encaissés (Club)", True, True, "buts_e"),
                 ("Date de création du Club", False, True, "date_crea"),
                 ("Budget du Club (en Milions d'euros)", True, True, "budget"),
                 ("Nombre de titres du Club", True, True, "titres"),
-                ("Rendement du club (en fonction du rang et du budget)", True, True, "rendement"),
+                ("Rendement du club (en fonction du rang et du budget)",
+                 True, True, "rendement"),
                 ("Domination du club en % d'années titrées", True, True, "domination")]
 
     # Liste des graphiques recommandés
     # (Nom, Paramètre en abscisse, Paramètres en ordonnée)
-    graphiques_recommandes = [("1. Nombre de buts marqués par club", 11, [16]),
+    graphiques_recommandes = [("\033[96m1.\033[0m Nombre de buts marqués par club", 11, [16]),
                               (
-                                  "2. Salaire moyen d'un joueur & Nombre de buts moyen marqués en fonction de son poste",
-                                  1,
-                                  [5, 7]),
-                              ("3. Poids des joueurs en fonction de leur taille", 3, [4]),
-                              ("4. Graphiques personnalisés", [], []), ]
+                                  "\033[96m2.\033[0m Salaire moyen d'un joueur & Nombre de buts moyen marqués en fonction de son poste",
+                                  1, [5, 7]),
+                              ("\033[96m3.\033[0m Poids des joueurs en fonction de leur taille", 3, [
+                               4]),
+                              ("\033[96m4.\033[0m Graphiques personnalisés", [], []), ]
 
     # On crée l'affichage des otpions
     options_print = ""
@@ -222,7 +232,7 @@ def choix_construction_graphique(message=""):
         options_print += f"{nom}\n"
 
     choix = utils.show_banner("Graphiques", "Veuillez choisir une option", emplacement="Menu > Graphiques",
-                              footer=options_print, frich=True,
+                              footer=options_print,
                               demande="Entrez votre choix (c pour revenir en arrière): ", alerte=message)
 
     # Récupérer les choix
@@ -240,7 +250,8 @@ def choix_construction_graphique(message=""):
         if choix == "c":
             main()
         else:
-            choix_construction_graphique("Choix invalide ! (Choix de graphiques)")
+            choix_construction_graphique(
+                "Choix invalide ! (Choix de graphiques)")
 
 
 def composition_graphique(elements: list):
@@ -255,17 +266,19 @@ def composition_graphique(elements: list):
         utils.clear_console()
         utils.show_banner("Graphiques Personnalisés", "Veuillez choisir une option",
                           emplacement="Menu > Graphiques > Graphique Personnalisé")
-        rich.print("[red][bold]*[/bold]: Paramètres disponibles uniquement en Abscisses[/red]")
+        print(
+            "\033[1;31m*\033[0;31m: Paramètres disponibles uniquement en Abscisses\033[0m")
         # On affiche la liste de paramètres
         for index, param in enumerate(elements):
             if not param[1]:
                 # Affichage de l'étoile si le paramètre n'est pas autorisé en ordonnée
-                rich.print(f"{index + 1}. {param[0]}[red]*[/red]")
+                print(
+                    f"\033[96m{index + 1}\033[0m. {param[0]}\033[31m*\033[0m")
             else:
-                rich.print(f"{index + 1}. {param[0]}")
+                print(f"\033[96m{index + 1}\033[0m. {param[0]}")
 
         # Affichage du message d'erreur avant celui de la demande
-        rich.print(f"[bold][red]{message}[/red][/bold]")
+        print(f"\033[1;31m{message}\033[0m")
 
         if len(ordonnes_choisies) == 0:  # Demande des paramètres en ordonnée
             ordonnees = input(
@@ -302,7 +315,8 @@ def composition_graphique(elements: list):
                             break
 
         else:  # Demande du paramètre en abscisse
-            abscisses = input("Entrez le paramètre à mettre en abscisses: ").strip()
+            abscisses = input(
+                "Entrez le paramètre à mettre en abscisses: ").strip()
 
             try:
                 # On essaye de convertir l'entrée en nombre
@@ -338,7 +352,7 @@ def compute_graphiques(elements, abscisse_choisie, ordonnes_choisies):
     if abscisse_choisie == 0:
         msg = ""
         # Soit sélectionner tout, soit par équipe, soit par nom de joueur
-        options = "*: tous\ne: Par équipe\ni: Individuellement"
+        options = "*: tous\ne: Par équipe\ni: Individuellement"  # TODO colorer
         while True:
             type_select = utils.show_banner("Graphiques Personnalisés",
                                             "Veuillez choisir le mode de selection des joueurs",
@@ -366,7 +380,8 @@ def compute_graphiques(elements, abscisse_choisie, ordonnes_choisies):
                 if not eqs_select:
                     msg = "Aucune équipe trouvée"
                 else:
-                    joueurs_df_take = joueurs_df_take[joueurs_df_take["club"].isin(eqs_select)]
+                    joueurs_df_take = joueurs_df_take[joueurs_df_take["club"].isin(
+                        eqs_select)]
                     break
             elif type_select == "i":
                 jrs_select = []
@@ -387,8 +402,11 @@ def compute_graphiques(elements, abscisse_choisie, ordonnes_choisies):
                 if not jrs_select:
                     msg = "Aucun joueur n'a pu être trouvée"
                 else:
-                    joueurs_df_take = joueurs_df_take[joueurs_df_take["nom_prenom"].isin(jrs_select)]
+                    joueurs_df_take = joueurs_df_take[joueurs_df_take["nom_prenom"].isin(
+                        jrs_select)]
                     break
+            elif type_select == "c":
+                composition_graphique(elements)
             else:
                 msg = "Choix invalide ! (type de selection)"
 
@@ -403,7 +421,8 @@ def compute_graphiques(elements, abscisse_choisie, ordonnes_choisies):
         list_abs = list(clubs_df[elements[abscisse_choisie][3]])
     else:
         if elements[abscisse_choisie][3] in ["poste", "meilleur pied", "date_crea"]:
-            list_abs = list(joueurs_df_take[elements[abscisse_choisie][3]].value_counts().index)
+            list_abs = list(
+                joueurs_df_take[elements[abscisse_choisie][3]].value_counts().index)
         else:
             list_abs = list(joueurs_df_take[elements[abscisse_choisie][3]])
 
@@ -420,7 +439,7 @@ def compute_graphiques(elements, abscisse_choisie, ordonnes_choisies):
                 for club in clubs_df[elements[abscisse_choisie][3]]:
                     moyennes.append(
                         round(joueurs_df_take[joueurs_df_take[elements[abscisse_choisie][3] + "_club"] == club][
-                                  elements[ord_choisie][3]].mean(), arrondi))
+                            elements[ord_choisie][3]].mean(), arrondi))
                 valeurs.append(moyennes)
                 descrs_valeurs.append(elements[ord_choisie][0] + " (Moyenne)")
 
@@ -431,13 +450,15 @@ def compute_graphiques(elements, abscisse_choisie, ordonnes_choisies):
                     moyennes = []
                     for elem in list_abs:
                         moyennes.append(round(joueurs_df_take[joueurs_df_take[elements[abscisse_choisie][3]] == elem][
-                                                  elements[ord_choisie][3]].mean(), arrondi))
+                            elements[ord_choisie][3]].mean(), arrondi))
 
                     valeurs.append(moyennes)
-                    descrs_valeurs.append(elements[ord_choisie][0] + " (Moyenne)")
+                    descrs_valeurs.append(
+                        elements[ord_choisie][0] + " (Moyenne)")
 
                 else:
-                    valeurs.append(list(joueurs_df_take[elements[ord_choisie][3]]))
+                    valeurs.append(
+                        list(joueurs_df_take[elements[ord_choisie][3]]))
                     descrs_valeurs.append(elements[ord_choisie][0])
         else:
             if "Club" in elements[abscisse_choisie][0]:
@@ -446,7 +467,8 @@ def compute_graphiques(elements, abscisse_choisie, ordonnes_choisies):
                 descrs_valeurs.append(elements[ord_choisie][0])
             else:
                 # L'ordonnée s'agit d'une statistique club et l'abscisse d'une statistique joueur => Pas de moyenne
-                valeurs.append(list(joueurs_df_take[elements[ord_choisie][3] + "_club"]))
+                valeurs.append(
+                    list(joueurs_df_take[elements[ord_choisie][3] + "_club"]))
                 descrs_valeurs.append(elements[ord_choisie][0])
 
     # On crée un titre de graphique
@@ -467,7 +489,8 @@ def graphiques_plot(list_abs, valeurs, valeurs_decrs, x_legend, title):
     # Pour chaque série de données, on trie les valeurs d'abscisse par ordre croissant
     # Le tout en triant de paire les valeurs d'ordonnées
     for idx_val, val_list in enumerate(valeurs):
-        _, valeurs[idx_val] = zip(*sorted(zip(list_abs, val_list), key=lambda e_abs: e_abs[0]))
+        _, valeurs[idx_val] = zip(
+            *sorted(zip(list_abs, val_list), key=lambda e_abs: e_abs[0]))
 
     list_abs = sorted(list_abs)
 
@@ -477,7 +500,8 @@ def graphiques_plot(list_abs, valeurs, valeurs_decrs, x_legend, title):
     axes = [ax] + [ax.twinx() for _ in range(len(valeurs) - 1)]
 
     if isinstance(list_abs[0], str):  # Graphique en barres
-        loc_x = np.arange(len(list_abs))  # Tableau Numpy contenant la localisation des labels
+        # Tableau Numpy contenant la localisation des labels
+        loc_x = np.arange(len(list_abs))
         width = 0.2  # largeur des barres
 
         ax_del = []
@@ -487,15 +511,18 @@ def graphiques_plot(list_abs, valeurs, valeurs_decrs, x_legend, title):
             if "Nombre" in legende:
                 if nombre_index is None:
                     nombre_index = i
-                    axe.bar(loc_x + (i) * width, val, width, label=legende, color=list_colors[i])
+                    axe.bar(loc_x + (i) * width, val, width,
+                            label=legende, color=list_colors[i])
                     axe.set_ylabel(legende)
 
                 else:
-                    axes[nombre_index].bar(loc_x + i * width, val, width, label=legende, color=list_colors[i])
+                    axes[nombre_index].bar(
+                        loc_x + i * width, val, width, label=legende, color=list_colors[i])
                     axes[nombre_index].set_ylabel("Nombre")
                     ax_del.append(i)
             else:
-                axe.bar(loc_x + (i) * width, val, width, label=legende, color=list_colors[i])
+                axe.bar(loc_x + (i) * width, val, width,
+                        label=legende, color=list_colors[i])
                 axe.set_ylabel(legende)
 
         # On enlève les axes inutiles
@@ -542,16 +569,19 @@ def graphiques_plot(list_abs, valeurs, valeurs_decrs, x_legend, title):
             if "Nombre" in legende:
                 if nombre_index is None:
                     nombre_index = i
-                    axe.scatter(list_abs, val, label=legende, color=list_colors[i], s=5)
+                    axe.scatter(list_abs, val, label=legende,
+                                color=list_colors[i], s=5)
                     axe.set_ylabel(legende)
                 else:
-                    axes[nombre_index].scatter(list_abs, val, label=legende, color=list_colors[i], s=5)
+                    axes[nombre_index].scatter(
+                        list_abs, val, label=legende, color=list_colors[i], s=5)
                     axe.set_ylabel(legende)
                     axes[nombre_index].set_ylabel("Nombre")
                     ax_del.append(i)
 
             else:
-                axe.scatter(list_abs, val, label=legende, color=list_colors[i], s=5)
+                axe.scatter(list_abs, val, label=legende,
+                            color=list_colors[i], s=5)
                 axe.set_ylabel(legende)
 
         # Affichage des courbes de moyenne
@@ -561,12 +591,15 @@ def graphiques_plot(list_abs, valeurs, valeurs_decrs, x_legend, title):
             if "Nombre" in legende:
                 if nombre_index is None:
                     nombre_index = i
-                    axe.plot(list_abs_moy, val_moy, label=legende + " (Moyenne)", color=list_colors[i])
+                    axe.plot(list_abs_moy, val_moy, label=legende +
+                             " (Moyenne)", color=list_colors[i])
                 else:
-                    axes[nombre_index].plot(list_abs_moy, val_moy, label=legende + " (Moyenne)", color=list_colors[i])
+                    axes[nombre_index].plot(
+                        list_abs_moy, val_moy, label=legende + " (Moyenne)", color=list_colors[i])
                     ax_del.append(i)
             else:
-                axe.plot(list_abs_moy, val_moy, label=legende + " (Moyenne)", color=list_colors[i])
+                axe.plot(list_abs_moy, val_moy, label=legende +
+                         " (Moyenne)", color=list_colors[i])
 
         for idx_del in ax_del:
             axes[idx_del].set_visible(False)
@@ -585,7 +618,8 @@ def graphiques_plot(list_abs, valeurs, valeurs_decrs, x_legend, title):
     ax.set_title(title)
 
     # On choisit l'endroit de la légende (coin supérieur gauche)
-    fig.legend(loc="upper left", bbox_to_anchor=(0, 1), bbox_transform=ax.transAxes)
+    fig.legend(loc="upper left", bbox_to_anchor=(
+        0, 1), bbox_transform=ax.transAxes)
 
     # Fonction pour réajuster le graphique en cas de redimensionnement de la fenêtre
     def on_resize(_):
@@ -640,11 +674,11 @@ def rechercher():
         first_df = joueurs_recherche
     else:
         first_df, second_df = (joueurs_recherche, clubs_recherche) if joueurs_recherche.loc[0]["score"] > \
-                                                                      clubs_recherche.loc[0]["score"] else (
+            clubs_recherche.loc[0]["score"] else (
             clubs_recherche, joueurs_recherche)
         ecart = first_df.loc[0]["score"] - second_df.loc[0]["score"]
 
-    # On ne garde que un seul df si il y a un écart trop important dans laqualité des résultats
+    # On ne garde qu'un seul df s'il y a un écart trop important dans laqualité des résultats
 
     # Si la réponse est sûre, on affiche directement les stats
     seuil_ecart = 0.1
@@ -652,7 +686,7 @@ def rechercher():
         show_stats(first_df.loc[0])
         rechercher()
 
-    if found:  # Si il y a au moins un résultat
+    if found:  # S'il y a au moins un résultat
         # Entêtes des colonnes
         ban1, ban2 = ("Joueurs Trouvés", "Equipes Trouvées") if "ville" not in list(first_df.columns) else (
             "Equipes Trouvées", "Joueurs Trouvés")
@@ -664,14 +698,14 @@ def rechercher():
         # Largeur max de la colonne de gauche
         max_len_left = 0
         for index, row in first_df.iterrows():
-            txt = f'{index + 1}. {row["nom_prenom"]}'
+            txt = f'\033[96m{index + 1}\033[0m. {row["nom_prenom"]}'
             max_len_left = max(max_len_left, len(txt))
             f_list.append(txt)
         max_len_left += 5
 
         for index, row in second_df.iterrows():
             print(len(f_list) + index + 1)
-            txt = f'{len(f_list) + index + 1}. {row["nom_prenom"]}'
+            txt = f'\033[96m{len(f_list) + index + 1}\033[0m. {row["nom_prenom"]}'
             s_list.append(txt)
 
         # On remplit les listes pour qu'elles aient la même taille
@@ -684,8 +718,9 @@ def rechercher():
 
         if ecart < seuil_ecart:
             # On affiche les 2 listes
-            affichage += f'{ban1.ljust(max_len_left)}|      {ban2} \n'
-            affichage += f'{(len(ban1) * "-").ljust(max_len_left)}|      {len(ban2) * "-"} \n'
+            len_color = len("\033[96m\033[0m")
+            affichage += f'{ban1.ljust(max_len_left-len_color)}|      {ban2} \n'
+            affichage += f'{(len(ban1) * "-").ljust(max_len_left - len_color)}|      {len(ban2) * "-"} \n'
 
             for f_elem, s_elem in zip(f_list, s_list):
                 affichage += f'{f_elem.ljust(max_len_left)}|      {s_elem} \n'
@@ -720,7 +755,6 @@ def rechercher():
                                 subtitle=f'"{recherche}"',
                                 emplacement="Menu > Recherche > Résultats de la Recherche",
                                 footer=affichage,
-                                frich=True,
                                 alerte=message_choix_interne,
                                 demande="Entrez le numéro de l'élément dont vous voulez obtenir les infos. (c pour "
                                         "revenir en arrière): ")
@@ -743,89 +777,88 @@ def rechercher():
 
 def show_stats(element: pd.Series):
     """Afficher les statistiques d'un joueur ou d'une équipe"""
-    # TODO Ajouter domination et rendement
     utils.show_banner("Statistiques",
                       emplacement=f"Menu > Recherche > {element['nom_prenom']} > Statistiques")
     isjoueur = "ville" not in list(element.index)
     if isjoueur:
-        # TODO affichage comme rich : Couleur pour les nombres
+        
         noms = f"""
         `          .~~~.                                            
-        `         |     |    Nom    : {element['nom']}
-        `         ".___."    Prénom : {element['prenom']}
-        `       .'       '.  Age    : {element['age']} ans ({element['birthdate']})
-        `       |         |  Club   : {element['name_club']}
+        `         |     |    Nom    : \033[00m\033[0m\033[96m{element['nom']}\033[0m
+        `         ".___."    Prénom : \033[00m\033[0m\033[96m{element['prenom']}\033[0m
+        `       .'       '.  Age    : \033[96m{element['age']}\033[0m ans (\033[36m{element['birthdate']}\033[0m)
+        `       |         |  Club   : \033[00m\033[0m\033[96m{element['name_club']}\033[0m
         """
         max_line = 0
         for line in noms.split('\n'):
             max_line = max(max_line, len(line.strip()))
-        unite_salaire = "M €"
+        unite_salaire = "M"
         salaire = element['salaire']
         if element['salaire'] < 1:
             salaire *= 1000
-            unite_salaire = "K €"
+            unite_salaire = "K"
         physique = f"""
 
-        Poids         : {round(element['poids'])} kg
-        Taille        : {round(element['taille'])} cm
-        Meilleur pied : {element['meilleur pied'].replace("Right", "Droit").replace("Left", "Gauche")}
-        Salaire       : {salaire} {unite_salaire} / mois
+        Poids         : \033[96m{round(element['poids'])}\033[0m kg
+        Taille        : \033[96m{round(element['taille'])}\033[0m cm
+        Meilleur pied : \033[96m{element['meilleur pied'].replace("Right", "Droit").replace("Left", "Gauche")}\033[0m
+        Salaire       : \033[96m{round(salaire, 3)} {unite_salaire}\033[0m € / mois
         """
         identite = ""
         for line_n, line_p in zip(noms.split('\n'), physique.split('\n')):
-            identite += line_n.strip().ljust(max_line + 5) + line_p.strip() + "\n"
+            identite += line_n.strip().ljust(max_line + 10) + line_p.strip() + "\n"
 
         stats_foot = f"""\n\n\n
-                Nombre de matchs joués        : {round(element['matchs_j'])}
+                Nombre de matchs joués        : \033[96m{round(element['matchs_j'])}\033[0m
 
-                Nombre de buts marqués        : {round(element['buts_m_joueur'])}
-                Nombre de passes déscisives   : {round(element['pass_d'])}
-                Nombre de buts encaissés      : {round(element['buts_e_joueur'])}\n\n
+                Nombre de buts marqués        : \033[96m{round(element['buts_m_joueur'])}\033[0m
+                Nombre de passes déscisives   : \033[96m{round(element['pass_d'])}\033[0m
+                Nombre de buts encaissés      : \033[96m{round(element['buts_e_joueur'])}\033[0m\n\n
                 """
 
         poste_milieu = """
         `       Poste:         Milieu
         `
-        `       |-------[red]------|------[/red]-------|
-        `       |       [red]######|######[/red]       |
-        `       |--.    [red]#####.|.#####[/red]    .--|
-        `       [  |    [red]####| * |####[/red]    |  ]
-        `       |--'    [red]#####`|`#####[/red]    '--|
-        `       |       [red]######|######[/red]       |
-        `       |-------[red]------|------[/red]-------|
+        `       |-------\033[31m------|------\033[0m-------|
+        `       |       \033[31m######|######\033[0m       |
+        `       |--.    \033[31m#####.|.#####\033[0m    .--|
+        `       [  |    \033[31m####| * |####\033[0m    |  ]
+        `       |--'    \033[31m#####`|`#####\033[0m    '--|
+        `       |       \033[31m######|######\033[0m       |
+        `       |-------\033[31m------|------\033[0m-------|
         """
         poste_att = """
         `       Poste:                  Attaquant
         `
-        `       |-------------|------[red]-------|[/red]
-        `       |             |      [red]###### |[/red]
-        `       |--.         .|.     [red]####.--|[/red]
-        `       [  |        | * |    [red]####|  ][/red]
-        `       |--'         `|`     [red]####'--|[/red]
-        `       |             |      [red]###### |[/red]
-        `       |-------------|------[red]-------|[/red]
+        `       |-------------|------\033[31m-------|\033[0m
+        `       |             |      \033[31m###### |\033[0m
+        `       |--.         .|.     \033[31m####.--|\033[0m
+        `       [  |        | * |    \033[31m####|  ]\033[0m
+        `       |--'         `|`     \033[31m####'--|\033[0m
+        `       |             |      \033[31m###### |\033[0m
+        `       |-------------|------\033[31m-------|\033[0m
         """
         poste_def = """
         `       Poste: Défenseur
         `
-        `       [red]|-------[/red]------|-------------|
-        `       [red]| ######[/red]      |             |
-        `       [red]|--.####[/red]     .|.         .--|
-        `       [red][  |####[/red]    | * |        |  ]
-        `       [red]|--'####[/red]     `|`         '--|
-        `       [red]| ######[/red]      |             |
-        `       [red]|-------[/red]------|-------------|
+        `       \033[31m|-------\033[0m------|-------------|
+        `       \033[31m| ######\033[0m      |             |
+        `       \033[31m|--.####\033[0m     .|.         .--|
+        `       \033[31m[  |####\033[0m    | * |        |  ]
+        `       \033[31m|--'####\033[0m     `|`         '--|
+        `       \033[31m| ######\033[0m      |             |
+        `       \033[31m|-------\033[0m------|-------------|
         """
         poste_gard = """
         `       Poste: Gardien
         `
-        `       |-------------|-------------|
-        `       |             |             |
-        `       [red]|--.[/red]         .|.         .--|
-        `       [red][##|[/red]        | * |        |  ]
-        `       [red]|--'[/red]         `|`         '--|
-        `       |             |             |
-        `       |-------------|-------------|
+        `       \033[00m|----\033[0m---------|-------------|
+        `       \033[00m|    \033[0m         |             |
+        `       \033[31m|--.\033[0m         .|.         .--|
+        `       \033[31m[##|\033[0m        | * |        |  ]
+        `       \033[31m|--'\033[0m         `|`         '--|
+        `       \033[00m|    \033[0m         |             |
+        `       \033[00m|----\033[0m---------|-------------|
         """
         poste = ""
 
@@ -841,32 +874,32 @@ def show_stats(element: pd.Series):
         for line_p, line_s in zip(poste.split('\n'), stats_foot.split('\n')):
             foot += line_p.strip().ljust(50) + line_s.strip() + "\n"
         print(identite)
-        rich.print(foot)
+        print(foot)
 
     else:
         affichage_constr = f"""
         ` +----+----------+                       
-        ` |    |  ~~~~~~~ |     Nom              : {element['nom_prenom']} (Ville : {element['ville']})                  
-        ` |----+  ~~~~    |     Date de création : {element['date_crea']}                          
-        ` |       ~~~~~~  |     Nombre de titres : {element['titres']}               
+        ` |    |  ~~~~~~~ |     Nom              : \033[96m{element['nom_prenom']}\033[0m (Ville : \033[36m{element['ville']}\033[0m)                  
+        ` |----+  ~~~~    |     Date de création : \033[96m{element['date_crea']}\033[0m
+        ` |       ~~~~~~  |     Nombre de titres : \033[96m{element['titres']}\033[0m
         ` +---------------+                   
         `
         `
         ` +---------------+                       
-        ` |   Ligue 1     |     Rang : {element['rang']}
-        ` |  (2022-2023)  |     Budget : {element['budget']} M€
+        ` |    Ligue 1    |     Rang : \033[96m{element['rang']}\033[0m
+        ` |  (2022-2023)  |     Budget : \033[96m{element['budget']} M\033[0m €
         ` +---------------+     
-        `                       Nombre de Victoires : {element['victoires']}
-        `                       Nombre de Nuls      : {element['nuls']}
-        `                       Nombre de Défaitres : {element['defaites']}
+        `                       Nombre de Victoires : \033[96m{element['victoires']}\033[0m
+        `                       Nombre de Nuls      : \033[96m{element['nuls']}\033[0m
+        `                       Nombre de Défaitres : \033[96m{element['defaites']}\033[0m
         `                       
-        `                       Nombre de buts Marqués   : {element['buts_m']}
-        `                       Nombre de buts Encaissés : {element['buts_e']}
+        `                       Nombre de buts Marqués   : \033[96m{element['buts_m']}\033[0m
+        `                       Nombre de buts Encaissés : \033[96m{element['buts_e']}\033[0m
         """
         for line in affichage_constr.split('\n'):
-            rich.print(line.strip())
+            print(line.strip())
 
-    input("Suite ?")
+    input("Appuyez sur Entrée pour continuer ...")
 
 
 def compute_recherche(recherche: str):
@@ -911,7 +944,7 @@ def compute_recherche(recherche: str):
         if not stop:
             if index != 0:
                 if (joueurs_recherche.iloc[index - 1]["score"] - row["score"] > 0.15 or joueurs_recherche.iloc[0][
-                    "score"] - row["score"] > 0.2):
+                        "score"] - row["score"] > 0.2):
                     joueurs_recherche.drop(index, inplace=True)
                     stop = True
         else:
@@ -948,9 +981,11 @@ def width_term_guide(re=False):
     if (not fonc) or (not confort):
         if re:
             if not fonc:
-                rich.print("[bold][red]Votre terminal est trop petit pour un affichage fonctionnel[/red][/bold]")
+                print(
+                    "\033[1;31mVotre terminal est trop petit pour un affichage fonctionnel\033[0m")
             if not confort:
-                rich.print("[red]Votre terminal est trop petit pour un affichage confortable[/red]")
+                print(
+                    "\033[31mVotre terminal est trop petit pour un affichage confortable\033[0m")
             resp = input("Voulez-vous vraiment continuer ? (o/n): ")
             if resp.lower() == "o":
                 return
@@ -959,16 +994,17 @@ def width_term_guide(re=False):
         else:
             utils.clear_console()
             print("_")
-            rich.print("[green]" + ("#\n" * 33)[:-1] + "~" + "[/green]")
-            rich.print("[green]" + "=" * 119 + "[/green]\n")
-            rich.print("[red]" + "=" * 86 + "[/red]")
+            print("\033[32m" + ("#\n" * 33)[:-1] + "~" + "\033[0m")
+            print("\033[32m" + "=" * 121 + "\033[0m\n")
+            print("\033[31m" + "=" * 88 + "\033[0m")
 
             print("")
-            rich.print("[bold]Agrandissez votre terminal pour augmenter l'expérience de navigation[/bold]")
-            rich.print(
+            print(
+                "\033[1mAgrandissez votre terminal pour augmenter l'expérience de navigation\033[0m")
+            print(
                 "Agrandissez jusqu'a ce que les lignes tiennent complètement sur une ligne (idem pour les colonnes)")
-            rich.print("Ligne [red]rouge[/red] : Affichage fonctionnel")
-            rich.print("Ligne [green]verte[/green] : Affichage confortable\n")
+            print("Ligne \033[31mrouge\033[0m : Affichage fonctionnel")
+            print("Ligne \033[32mverte\033[0m : Affichage confortable\n")
 
         input("Appuyez sur Entrée quand vous avez fini ...")
         width_term_guide(True)
