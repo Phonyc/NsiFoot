@@ -1,13 +1,10 @@
-import os
-
 import matplotlib.pyplot as plt
 import numpy as np
 import pandas as pd
-from rich.console import Console
-from rich.table import Table
 import rich
 import utils
 
+# TODO ajouter les relégations etc
 # Constantes
 HEADER = """
  _  _      _  ___            _   
@@ -96,22 +93,100 @@ def main(message=""):
     if first_choice == "1":
         rechercher()
     elif first_choice == "2":
-        afficher_classements()
+        choix_classements()
     elif first_choice == "3":
         choix_construction_graphique()
     else:
         main("Choix invalide ! (Menu Principal)")
 
 
-def afficher_classements():
+def choix_classements(message=""):
+    """Menu pour choisir un classement à afficher"""
+
+    # On crée l'affichage des options
+    elems_joueurs = [("age", "Age"), ("poids", "Poids (en kg)"), ("taille", "Taille (en cm)"),
+                     ("salaire", "Salaire (en M€)"),
+                     ("buts_m_joueur", "Nombre de buts marqués"),
+                     ("pass_d", "Nombre de passes décisives"),
+                     ("buts_e_joueur", "Nombre de buts encaissés"), ("matchs_j", "Nombre de matchs joués"),
+                     ]
+    elems_clubs = [("date_crea", "Date de création"), ("rang", "Rang (+ relégations)"), ("budget", "Budget (en M€)"),
+                   ("titres", "Nombre de titres"),
+                   ("victoires", "Nombre de victoires"),
+                   ("nuls", "Nombre de nuls"),
+                   ("defaites", "Nombre de défaites"),
+                   ("buts_m", "Nombre de buts marqués"),
+                   ("buts_e", "Nombre de buts encaissés"),
+                   ("rendement", "Rendement"),
+                   ("domination", "Domination")]
+
+    options_print = "[red]Classements des joueurs[/red]\n"
+    for index_class, classement_elem in enumerate(elems_joueurs):
+        options_print += f"{index_class + 1}. {classement_elem[1]}\n"
+
+    options_print += "\n[red]Classements des clubs[/red]\n"
+    for index_class, classement_elem in enumerate(elems_clubs):
+        options_print += f"{len(elems_joueurs) + index_class + 1}. {classement_elem[1]}\n"
+
+    choix = utils.show_banner("Classement", "Entrez un paramètre par lequel classer les joueurs / les équipes",
+                              emplacement="Menu > Classements",
+                              footer=options_print, frich=True,
+                              demande="Entrez votre choix (c pour revenir en arrière): ", alerte=message)
+
+    # Récupérer les choix
+    try:
+        int_choice = int(choix)
+        if int_choice <= len(elems_joueurs):
+            # On envoie à la consruction de graphiques personnalisés
+            afficher_classements(joueurs_df, elems_joueurs[int_choice - 1])
+            choix_classements()
+        else:
+            afficher_classements(clubs_df, elems_clubs[int_choice - len(elems_joueurs) - 1])
+            choix_classements()
+    except (ValueError, IndexError):
+        if choix == "c":
+            main()
+        else:
+            choix_classements("Choix invalide ! (Choix de classements)")
+
+
+def afficher_classements(df, elem, all=False):
     """Afficher les classements"""
-    print("classements")
+
+    # Savoir quelle colonne aller chercher pour le nom
+    col_name = "name" if "name" in df.columns else "nom_prenom"
+
+    # Obtenir la plus grande largeur de nom_prenom
+    max_len = df[col_name].apply(len).max()
+    # Remplir la table
+    table = ""
+
+    sorted_df = df.sort_values(by=elem[0], ascending=elem[0] in ["rang"]).reset_index(drop=True)
+    if all:
+        for index, row in sorted_df.iterrows():
+            table += f"{(str(index + 1) + '.').ljust(3)} {row[col_name].ljust(max_len)} : {row[elem[0]]}\n"
+    else:
+        for index, row in sorted_df.head(10).iterrows():
+            table += f"{(str(index + 1) + '.').ljust(3)} {row[col_name].ljust(max_len)} : {row[elem[0]]}\n"
+        table += "\n...\n\n"
+        for index, row in sorted_df.tail(10).iterrows():
+            table += f"{(str(index + 1) + '.').ljust(3)} {row[col_name].ljust(max_len)} : {row[elem[0]]}\n"
+
+    # On affiche la table
+    subt = ("Classement des equipes par " if col_name == "name" else "Classement des joueurs par ") + elem[1]
+    choix = utils.show_banner("Classement", subt,
+                              emplacement="Menu > Classements > Classement",
+                              footer=table, frich=True,
+                              demande="Appuyez Entrée pour continuer (* puis Entrée pour tout afficher) :")
+    if choix == "*":
+        afficher_classements(df, elem, True)
 
 
 def choix_construction_graphique(message=""):
     """Menu pour choisir entre des graphiques recommandés ou des graphiques personnalisés"""
 
     # Elements transmis pour les graphiques personnalisés
+    # TODO Améliorer les nominations dans les graphiques
     elements = [("Nom du joueur", False, True, "nom_prenom"), ("Poste", False, True, "poste"),
                 ("Age", True, True, "age"), ("Poids (en kg)", True, True, "poids"),
                 ("Taille (en cm)", True, True, "taille"),
@@ -127,7 +202,9 @@ def choix_construction_graphique(message=""):
                 ("Nombre de buts encaissés (Club)", True, True, "buts_e"),
                 ("Date de création du Club", False, True, "date_crea"),
                 ("Budget du Club (en Milions d'euros)", True, True, "budget"),
-                ("Nombre de titres du Club", True, True, "titres")]
+                ("Nombre de titres du Club", True, True, "titres"),
+                ("Rendement du club (en fonction du rang et du budget)", True, True, "rendement"),
+                ("Domination du club en % d'années titrées", True, True, "domination")]
 
     # Liste des graphiques recommandés
     # (Nom, Paramètre en abscisse, Paramètres en ordonnée)
@@ -256,10 +333,11 @@ def composition_graphique(elements: list):
 
 def compute_graphiques(elements, abscisse_choisie, ordonnes_choisies):
     """Créer les listes de valeurs des graphiques"""
-    # TODO commentaires
     joueurs_df_take = joueurs_df.copy(deep=True)
+    # Si l'abscisse est les noms, on demande à sélectionner les noms
     if abscisse_choisie == 0:
         msg = ""
+        # Soit sélectionner tout, soit par équipe, soit par nom de joueur
         options = "*: tous\ne: Par équipe\ni: Individuellement"
         while True:
             type_select = utils.show_banner("Graphiques Personnalisés",
@@ -278,6 +356,7 @@ def compute_graphiques(elements, abscisse_choisie, ordonnes_choisies):
                                               demande="Entrez vos choix séparés par / (c pour revenir en arrière): ",
                                               emplacement="Menu > Graphiques > Graphique Personnalisé > Selection des "
                                                           "joueurs")
+                # On fait une recherche avec les données entrées
                 for eq_txt in eqs_texte.split('/'):
                     _, res_df = compute_recherche(eq_txt.strip())
                     try:
@@ -297,6 +376,7 @@ def compute_graphiques(elements, abscisse_choisie, ordonnes_choisies):
                                               emplacement="Menu > Graphiques > Graphique Personnalisé > Selection des "
                                                           "joueurs")
 
+                # On fait une rechrche avec les données entrées
                 for jr_txt in jrs_texte.split('/'):
                     res_df, _ = compute_recherche(jr_txt.strip())
                     try:
@@ -318,7 +398,8 @@ def compute_graphiques(elements, abscisse_choisie, ordonnes_choisies):
 
     # En fonction des différents paramètres, il faut parfois faire des moyennes
 
-    if "Club" in elements[abscisse_choisie][0]:  # Si c'est une statistique club
+    # Définir les valeurs en abscisse
+    if "Club" in elements[abscisse_choisie][0]:
         list_abs = list(clubs_df[elements[abscisse_choisie][3]])
     else:
         if elements[abscisse_choisie][3] in ["poste", "meilleur pied", "date_crea"]:
@@ -330,10 +411,10 @@ def compute_graphiques(elements, abscisse_choisie, ordonnes_choisies):
     descrs_valeurs = []
     arrondi = 50
     for ord_choisie in ordonnes_choisies:
-        # Si c'est une statistique joueur
+        # En fonction du paramètre choisi, il faut faire des moyennes ou pas
         if "Club" not in elements[ord_choisie][0]:
-            # Si c'est une statistique club
             if "Club" in elements[abscisse_choisie][0]:
+                # L'ordonnée s'agit d'une statistique joueur et l'abscisse d'une statistique club
                 # Calculer la moyenne des statistiques des joueurs pour chaque club
                 moyennes = []
                 for club in clubs_df[elements[abscisse_choisie][3]]:
@@ -344,6 +425,8 @@ def compute_graphiques(elements, abscisse_choisie, ordonnes_choisies):
                 descrs_valeurs.append(elements[ord_choisie][0] + " (Moyenne)")
 
             else:
+                # L'ordonnée s'agit d'une statistique joueur et l'abscisse d'une statistique joueur
+                # Pas de moyenne à calculer sauf si on a affaire au poste ou au meilleur pied
                 if elements[abscisse_choisie][3] in ["poste", "meilleur pied"]:
                     moyennes = []
                     for elem in list_abs:
@@ -358,13 +441,15 @@ def compute_graphiques(elements, abscisse_choisie, ordonnes_choisies):
                     descrs_valeurs.append(elements[ord_choisie][0])
         else:
             if "Club" in elements[abscisse_choisie][0]:
-
+                # L'ordonnée s'agit d'une statistique club et l'abscisse d'une statistique club → Pas de moyenne
                 valeurs.append(list(clubs_df[elements[ord_choisie][3]]))
                 descrs_valeurs.append(elements[ord_choisie][0])
             else:
+                # L'ordonnée s'agit d'une statistique club et l'abscisse d'une statistique joueur => Pas de moyenne
                 valeurs.append(list(joueurs_df_take[elements[ord_choisie][3] + "_club"]))
                 descrs_valeurs.append(elements[ord_choisie][0])
 
+    # On crée un titre de graphique
     titre = "Graphique de \""
     for ord_choisie in ordonnes_choisies:
         titre += elements[ord_choisie][0] + ", "
@@ -406,9 +491,7 @@ def graphiques_plot(list_abs, valeurs, valeurs_decrs, x_legend, title):
                     axe.set_ylabel(legende)
 
                 else:
-                    axes[nombre_index].bar(loc_x + (i) * width, val, width, label=legende, color=list_colors[i])
-                    # old_lab = axes[nombre_index].get_ylabel()
-
+                    axes[nombre_index].bar(loc_x + i * width, val, width, label=legende, color=list_colors[i])
                     axes[nombre_index].set_ylabel("Nombre")
                     ax_del.append(i)
             else:
@@ -531,19 +614,23 @@ def rechercher():
                                   emplacement="Menu > Recherche",
                                   demande="Entrez le nom du joueur ou de l'équipe à chercher (c pour revenir en "
                                           "arrière): ")
-
+    if recherche == "c":
+        main()
+        return
     # On effectue la recherche
     joueurs_recherche, clubs_recherche = compute_recherche(recherche)
     clubs_recherche.rename(columns={"name": "nom_prenom"}, inplace=True)
 
     # Affichage des résultats
-    # TODO Commentaires
 
     affichage = "\n"
     found = True
+
+    # On calcule un écart de score pour savoir si on affiche les deux df ou un seul
     ecart = 10
-    second_df = pd.DataFrame()
+
     # Afficher en premier le df où il y a le score de ressemblance le plus grand
+    second_df = pd.DataFrame()
     if len(joueurs_recherche) == 0 and len(clubs_recherche) == 0:
         found = False
         first_df = pd.DataFrame()
@@ -559,22 +646,27 @@ def rechercher():
 
     # On ne garde que un seul df si il y a un écart trop important dans laqualité des résultats
 
+    # Si la réponse est sûre, on affiche directement les stats
     seuil_ecart = 0.1
     if len(first_df) == 1 and (len(second_df) == 0 or ecart > seuil_ecart):
         show_stats(first_df.loc[0])
         rechercher()
 
-    if found:
+    if found:  # Si il y a au moins un résultat
+        # Entêtes des colonnes
         ban1, ban2 = ("Joueurs Trouvés", "Equipes Trouvées") if "ville" not in list(first_df.columns) else (
             "Equipes Trouvées", "Joueurs Trouvés")
-        max_len_left = 0
+
+        # Listes des textes dans les colonnes
         f_list = []
         s_list = []
+
+        # Largeur max de la colonne de gauche
+        max_len_left = 0
         for index, row in first_df.iterrows():
             txt = f'{index + 1}. {row["nom_prenom"]}'
             max_len_left = max(max_len_left, len(txt))
             f_list.append(txt)
-
         max_len_left += 5
 
         for index, row in second_df.iterrows():
@@ -582,6 +674,7 @@ def rechercher():
             txt = f'{len(f_list) + index + 1}. {row["nom_prenom"]}'
             s_list.append(txt)
 
+        # On remplit les listes pour qu'elles aient la même taille
         if len(f_list) > len(s_list):
             for _ in range(len(f_list) - len(s_list)):
                 s_list.append(" ")
@@ -590,16 +683,19 @@ def rechercher():
                 f_list.append(" ")
 
         if ecart < seuil_ecart:
+            # On affiche les 2 listes
             affichage += f'{ban1.ljust(max_len_left)}|      {ban2} \n'
             affichage += f'{(len(ban1) * "-").ljust(max_len_left)}|      {len(ban2) * "-"} \n'
 
             for f_elem, s_elem in zip(f_list, s_list):
                 affichage += f'{f_elem.ljust(max_len_left)}|      {s_elem} \n'
         else:
+            # On affiche qu'une liste
             affichage += f'{ban1}\n'
             affichage += f'{len(ban1) * "-"}\n'
             for f_list_elem in f_list:
                 affichage += f'{f_list_elem}\n'
+
     else:
         affichage = "\nAucun résultat trouvé\n"
         affichage += """
@@ -614,6 +710,7 @@ def rechercher():
                                                                              
         """
     message_choix_interne = ""
+    # Choix de l'élément à afficher
     while True:
         if not found:
             print(affichage)
@@ -646,7 +743,7 @@ def rechercher():
 
 def show_stats(element: pd.Series):
     """Afficher les statistiques d'un joueur ou d'une équipe"""
-
+    # TODO Ajouter domination et rendement
     utils.show_banner("Statistiques",
                       emplacement=f"Menu > Recherche > {element['nom_prenom']} > Statistiques")
     isjoueur = "ville" not in list(element.index)
