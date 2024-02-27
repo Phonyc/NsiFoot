@@ -48,6 +48,7 @@ Préparation de votre graphique
        #############   
         
 """
+
 # Charger les données des fichiers CSV
 clubs_df = pd.read_csv("clubs.csv", delimiter=';')
 joueurs_df = pd.read_csv("joueurs.csv", delimiter=';')
@@ -190,7 +191,9 @@ def composition_graphique(elements: list):
         rich.print(f"[bold][red]{message}[/red][/bold]")
 
         if len(ordonnes_choisies) == 0:  # Demande des paramètres en ordonnée
-            ordonnees = input("Entrez vos paramètres à mettre en ordonnée (Séparés par un espace /!\\ pas plus de 4): ").strip().split(' ')
+            ordonnees = input(
+                "Entrez vos paramètres à mettre en ordonnée (Séparés par un espace /!\\ pas plus de 4): ").strip().split(
+                ' ')
             if len(ordonnees) == 0:
                 message = "Veuillez entrer au moins un paramètre"
             else:
@@ -243,7 +246,7 @@ def composition_graphique(elements: list):
                 message = "Le paramètre entré est déjà en ordonnée"
                 abscisse_choisie = None
 
-        # Si tout à été choisi, on sort de la boucle, sinon on reboucle
+        # Si tout a été choisi, on sort de la boucle, sinon on reboucle
         if len(ordonnes_choisies) > 0 and abscisse_choisie is not None:
             break
 
@@ -366,7 +369,8 @@ def compute_graphiques(elements, abscisse_choisie, ordonnes_choisies):
     for ord_choisie in ordonnes_choisies:
         titre += elements[ord_choisie][0] + ", "
     titre = titre[:-2]
-    graphiques_plot(list_abs, valeurs, descrs_valeurs, elements[abscisse_choisie][0], titre + '" en fonction de "' + elements[abscisse_choisie][0] + '"')
+    graphiques_plot(list_abs, valeurs, descrs_valeurs, elements[abscisse_choisie][0],
+                    titre + '" en fonction de "' + elements[abscisse_choisie][0] + '"')
 
 
 def graphiques_plot(list_abs, valeurs, valeurs_decrs, x_legend, title):
@@ -600,13 +604,13 @@ def rechercher():
         affichage = "\nAucun résultat trouvé\n"
         affichage += """
                                                                  
-           |--------------|--------------|
-           |       ?      |       ?      |
-           |--.          .|.          .--|
-           [  |    ?    | * |     ?   |  ]
-           |--'          `|`          '--|
-           |       ?      |       ?      |
-           |--------------|--------------|
+           |-------------|-------------|
+           |      ?      |      ?      |
+           |--.         .|.         .--|
+           [  |   ?    | * |    ?   |  ]
+           |--'         `|`         '--|
+           |      ?      |      ?      |
+           |-------------|-------------|
                                                                              
         """
     message_choix_interne = ""
@@ -642,13 +646,129 @@ def rechercher():
 
 def show_stats(element: pd.Series):
     """Afficher les statistiques d'un joueur ou d'une équipe"""
-    # TODO Si joueur, afficher un dessin de terrain avec la position
-    console = Console()
-    table = Table(title="Statistiques")
-    for key, value in element.items():
-        table.add_row(str(key), str(value))
-    console.print(table)
-    element.to_json("club.json")
+
+    utils.show_banner("Statistiques",
+                      emplacement=f"Menu > Recherche > {element['nom_prenom']} > Statistiques")
+    isjoueur = "ville" not in list(element.index)
+    if isjoueur:
+        # TODO affichage comme rich : Couleur pour les nombres
+        noms = f"""
+        `          .~~~.                                            
+        `         |     |    Nom    : {element['nom']}
+        `         ".___."    Prénom : {element['prenom']}
+        `       .'       '.  Age    : {element['age']} ans ({element['birthdate']})
+        `       |         |  Club   : {element['name_club']}
+        """
+        max_line = 0
+        for line in noms.split('\n'):
+            max_line = max(max_line, len(line.strip()))
+        unite_salaire = "M €"
+        salaire = element['salaire']
+        if element['salaire'] < 1:
+            salaire *= 1000
+            unite_salaire = "K €"
+        physique = f"""
+
+        Poids         : {round(element['poids'])} kg
+        Taille        : {round(element['taille'])} cm
+        Meilleur pied : {element['meilleur pied'].replace("Right", "Droit").replace("Left", "Gauche")}
+        Salaire       : {salaire} {unite_salaire} / mois
+        """
+        identite = ""
+        for line_n, line_p in zip(noms.split('\n'), physique.split('\n')):
+            identite += line_n.strip().ljust(max_line + 5) + line_p.strip() + "\n"
+
+        stats_foot = f"""\n\n\n
+                Nombre de matchs joués        : {round(element['matchs_j'])}
+
+                Nombre de buts marqués        : {round(element['buts_m_joueur'])}
+                Nombre de passes déscisives   : {round(element['pass_d'])}
+                Nombre de buts encaissés      : {round(element['buts_e_joueur'])}\n\n
+                """
+
+        poste_milieu = """
+        `       Poste:         Milieu
+        `
+        `       |-------[red]------|------[/red]-------|
+        `       |       [red]######|######[/red]       |
+        `       |--.    [red]#####.|.#####[/red]    .--|
+        `       [  |    [red]####| * |####[/red]    |  ]
+        `       |--'    [red]#####`|`#####[/red]    '--|
+        `       |       [red]######|######[/red]       |
+        `       |-------[red]------|------[/red]-------|
+        """
+        poste_att = """
+        `       Poste:                  Attaquant
+        `
+        `       |-------------|------[red]-------|[/red]
+        `       |             |      [red]###### |[/red]
+        `       |--.         .|.     [red]####.--|[/red]
+        `       [  |        | * |    [red]####|  ][/red]
+        `       |--'         `|`     [red]####'--|[/red]
+        `       |             |      [red]###### |[/red]
+        `       |-------------|------[red]-------|[/red]
+        """
+        poste_def = """
+        `       Poste: Défenseur
+        `
+        `       [red]|-------[/red]------|-------------|
+        `       [red]| ######[/red]      |             |
+        `       [red]|--.####[/red]     .|.         .--|
+        `       [red][  |####[/red]    | * |        |  ]
+        `       [red]|--'####[/red]     `|`         '--|
+        `       [red]| ######[/red]      |             |
+        `       [red]|-------[/red]------|-------------|
+        """
+        poste_gard = """
+        `       Poste: Gardien
+        `
+        `       |-------------|-------------|
+        `       |             |             |
+        `       [red]|--.[/red]         .|.         .--|
+        `       [red][##|[/red]        | * |        |  ]
+        `       [red]|--'[/red]         `|`         '--|
+        `       |             |             |
+        `       |-------------|-------------|
+        """
+        poste = ""
+
+        if element["poste"] == "Gardien":
+            poste = poste_gard
+        elif element["poste"] == "Défenseur":
+            poste = poste_def
+        elif element["poste"] == "Milieu":
+            poste = poste_milieu
+        elif element["poste"] == "Attaquant":
+            poste = poste_att
+        foot = ""
+        for line_p, line_s in zip(poste.split('\n'), stats_foot.split('\n')):
+            foot += line_p.strip().ljust(50) + line_s.strip() + "\n"
+        print(identite)
+        rich.print(foot)
+
+    else:
+        affichage_constr = f"""
+        ` +----+----------+                       
+        ` |    |  ~~~~~~~ |     Nom              : {element['nom_prenom']} (Ville : {element['ville']})                  
+        ` |----+  ~~~~    |     Date de création : {element['date_crea']}                          
+        ` |       ~~~~~~  |     Nombre de titres : {element['titres']}               
+        ` +---------------+                   
+        `
+        `
+        ` +---------------+                       
+        ` |   Ligue 1     |     Rang : {element['rang']}
+        ` |  (2022-2023)  |     Budget : {element['budget']} M€
+        ` +---------------+     
+        `                       Nombre de Victoires : {element['victoires']}
+        `                       Nombre de Nuls      : {element['nuls']}
+        `                       Nombre de Défaitres : {element['defaites']}
+        `                       
+        `                       Nombre de buts Marqués   : {element['buts_m']}
+        `                       Nombre de buts Encaissés : {element['buts_e']}
+        """
+        for line in affichage_constr.split('\n'):
+            rich.print(line.strip())
+
     input("Suite ?")
 
 
