@@ -1,6 +1,7 @@
 import matplotlib.pyplot as plt
 import numpy as np
 import pandas as pd
+
 import utils
 
 # TODO ajouter les relégations etc
@@ -711,10 +712,10 @@ def rechercher():
         # On remplit les listes pour qu'elles aient la même taille
         if len(f_list) > len(s_list):
             for _ in range(len(f_list) - len(s_list)):
-                s_list.append(" ")
+                s_list.append("\033[96m\033[0m")
         elif len(f_list) < len(s_list):
             for _ in range(len(s_list) - len(f_list)):
-                f_list.append(" ")
+                f_list.append("\033[96m\033[0m")
 
         if ecart < seuil_ecart:
             # On affiche les 2 listes
