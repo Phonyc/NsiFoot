@@ -160,7 +160,8 @@ def compute_graphiques(abscisse_choisie, ordonnes_choisies):
     """Créer les listes de valeurs des graphiques"""
     joueurs_df_take = datas.joueurs_df.copy(deep=True)
     # Si l'abscisse est les noms, on demande à sélectionner les noms
-
+    if abscisse_choisie == 0:
+        joueurs_df_take = select_joueurs(joueurs_df_take)
     print("Préparation de votre graphique")
     utils.show_banner("Graphiques Personnalisés", footer=dessins.GRAPH_WAIT,
                       emplacement="Menu > Graphiques > Graphique Personnalisé > Préparation du graphique")
@@ -236,7 +237,7 @@ def select_joueurs(joueurs_df_take):
     """Sélection des joueurs pour le graphique"""
     msg = ""
     # Soit sélectionner tout, soit par équipe, soit par nom de joueur
-    options = "\033[96m*\033[0m: tous\n\033[96me\033[0m: Par équipe\n\033[96mi\033[0m: Individuellement"  # TODO colorer
+    options = "\033[96m*\033[0m: tous\n\033[96me\033[0m: Par équipe\n\033[96mi\033[0m: Individuellement"
     while True:
         type_select = utils.show_banner("Graphiques Personnalisés",
                                         "Veuillez choisir le mode de selection des joueurs",
@@ -259,7 +260,7 @@ def select_joueurs(joueurs_df_take):
                 _, res_df = compute_recherche(eq_txt.strip())
                 try:
                     eqs_select.append(res_df.loc[0]["id"])
-                except IndexError:
+                except (IndexError, KeyError):
                     pass
             if not eqs_select:
                 msg = "Aucune équipe trouvée"
@@ -282,7 +283,7 @@ def select_joueurs(joueurs_df_take):
                 res_df, _ = compute_recherche(jr_txt.strip())
                 try:
                     jrs_select.append(res_df.loc[0]["nom_prenom"])
-                except:
+                except (IndexError, KeyError):
                     pass
 
             if not jrs_select:
