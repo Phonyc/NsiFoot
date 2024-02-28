@@ -11,10 +11,10 @@ def menu():
 
     # On affiche la décoration et demande la recherche
     recherche = utils.show_page("Recherche",
-                                  "Veuillez rentrer une requête (la forme de la requête n'as pas d'importance)",
-                                       emplacement="Menu > Recherche",
-                                       demande="Entrez le nom du joueur ou de l'équipe à chercher (c pour revenir en "
-                                          "arrière): ")
+                                "Veuillez rentrer une requête (la forme de la requête n'as pas d'importance)",
+                                emplacement="Menu > Recherche",
+                                demande="Entrez le nom du joueur ou de l'équipe à chercher (c pour revenir en "
+                                        "arrière): ")
     if recherche == "c":
         return
 
@@ -35,12 +35,12 @@ def menu():
         elif affichage != "":
             while True:
                 rep = utils.show_page("Résultats Recherche",
-                                             subtitle=f'"{recherche}"',
-                                             emplacement="Menu > Recherche > Résultats de la Recherche",
-                                             footer=affichage,
-                                             alerte=message_choix_interne,
-                                             demande="Entrez le numéro de l'élément dont vous voulez obtenir les infos. (c "
-                                                "pour revenir en arrière): ")
+                                      subtitle=f'"{recherche}"',
+                                      emplacement="Menu > Recherche > Résultats de la Recherche",
+                                      footer=affichage,
+                                      alerte=message_choix_interne,
+                                      demande="Entrez le numéro de l'élément dont vous voulez obtenir les infos. (c "
+                                              "pour revenir en arrière): ")
                 if rep == "c":
                     break
 
@@ -63,8 +63,6 @@ def show_search_results(joueurs_recherche, clubs_recherche):
 
     # On ne garde qu'un seul df s'il y a un écart trop important dans la qualité des résultats
     found, ecart, first_df, second_df = search_results_get_first_df(joueurs_recherche, clubs_recherche)
-
-    assert len(first_df) >= len(second_df)
 
     # Si la réponse est sûre, on affiche directement les stats
     seuil_ecart = 0.1
@@ -145,7 +143,7 @@ def search_results_get_first_df(joueurs_recherche, clubs_recherche):
 def show_stats(element: pd.Series):
     """Afficher les statistiques d'un joueur ou d'une équipe"""
     utils.show_page("Statistiques",
-                           emplacement=f"Menu > Recherche > {element['nom_prenom']} > Statistiques")
+                    emplacement=f"Menu > Recherche > {element['nom_prenom']} > Statistiques")
     isjoueur = "ville" not in list(element.index)
     if isjoueur:
 
@@ -190,7 +188,7 @@ def show_stats(element: pd.Series):
             foot += line_p.strip().ljust(50) + line_s.strip() + "\n"
         print(identite)
         print(foot)
-
+        input("Appuyez sur Entrée pour continuer ...")
     else:
         affichage_constr = f"""
         ` +----+----------+                       
@@ -213,8 +211,12 @@ def show_stats(element: pd.Series):
         """
         for line in affichage_constr.split('\n'):
             print(line.strip())
-
-    input("Appuyez sur Entrée pour continuer ...")
+        resp = input("Entrez * pour afficher les joueurs, simplement Entrée pour continuer ...")
+        if resp == "*":
+            print("\n\n")
+            for index, row in datas.joueurs_df[datas.joueurs_df["club"] == element["id"]].iterrows():
+                print(f"{row['nom_prenom']} \033[96m{row['poste']}\033[0m")
+            input("Appuyez sur Entrée pour continuer ...")
 
 
 def compute_recherche(recherche: str):

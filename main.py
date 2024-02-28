@@ -8,9 +8,6 @@ import recherche
 import utils
 
 
-# TODO ajouter les relégations etc
-
-
 def main(message=""):
     """Menu principal"""
     # Afficher le menu principal

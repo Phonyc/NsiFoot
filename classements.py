@@ -33,9 +33,9 @@ def menu(message=""):
         options_print += f"\033[96m{len(elems_joueurs) + index_class + 1}\033[0m. {classement_elem[1]}\n"
 
     choix = utils.show_page("Classement", "Entrez un paramètre par lequel classer les joueurs / les équipes",
-                                   emplacement="Menu > Classements",
-                                   footer=options_print,
-                                   demande="Entrez votre choix (c pour revenir en arrière): ", alerte=message)
+                            emplacement="Menu > Classements",
+                            footer=options_print,
+                            demande="Entrez votre choix (c pour revenir en arrière): ", alerte=message)
 
     # Récupérer les choix
     try:
@@ -78,15 +78,19 @@ def afficher_classements(df, elem, show_all=False):
                       f"{row[elem[0]]}\033[0m\n")
         table += "\n\033[33m...\033[0m\n\n"
         for index, row in sorted_df.tail(10).iterrows():
-            table += (f"\033[36m{(str(index + 1) + '.').ljust(3)}\033[0m {row[col_name].ljust(max_len)} : \033[96m"
-                      f"{row[elem[0]]}\033[0m\n")
 
+            insert = "\033[31m" if index >= len(sorted_df) - 2 and elem[0] == "rang" else ""
+            insert2 = "\033[0m" if index >= len(sorted_df) - 2 and elem[0] == "rang" else ""
+
+            table += (f"\033[36m{(str(index + 1) + '.').ljust(3)}\033[0m {insert}{row[col_name].ljust(max_len)}{insert2}"
+                      f" : \033[96m{row[elem[0]]}\033[0m\n")
+
+        table += "\nEn rouge : 2 derniers clubs relégués\n"
     # On affiche la table
     subt = ("Classement des equipes par " if col_name == "name" else "Classement des joueurs par ") + elem[1]
     choix = utils.show_page("Classement", subt,
-                                   emplacement="Menu > Classements > Classement",
-                                   footer=table,
-                                   demande="Appuyez Entrée pour continuer (* puis Entrée pour tout afficher) :")
+                            emplacement="Menu > Classements > Classement",
+                            footer=table,
+                            demande="Appuyez Entrée pour continuer (* puis Entrée pour tout afficher) :")
     if choix == "*":
         afficher_classements(df, elem, True)
-
