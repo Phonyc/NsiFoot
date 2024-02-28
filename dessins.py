@@ -1,3 +1,4 @@
+"""Module contenant les dessins"""
 HEADER = """
  _  _      _  ___            _   
 | \| | ___(_)| __| ___  ___ | |_ 
