@@ -1,10 +1,11 @@
 """Programme de présentation de statistiques de la ligue 1 pour 2023"""
-import datas
+import os
+
+import classements
 import dessins
 import graphiques
-
-import utils
 import recherche
+import utils
 
 
 # TODO ajouter les relégations etc
@@ -13,107 +14,19 @@ import recherche
 def main(message=""):
     """Menu principal"""
     # Afficher le menu principal
-    first_choice = utils.show_banner("Menu principal", "Veuillez choisir une option", emplacement="Menu",
-                                     header=dessins.HEADER,
-                                     footer=dessins.MAIN_OPTIONS, demande="Entrez votre choix (Ctrl+C pour quitter): ",
-                                     alerte=message)
+    first_choice = utils.show_page("Menu principal", "Veuillez choisir une option", emplacement="Menu",
+                                   header=dessins.HEADER,
+                                   footer=dessins.MAIN_OPTIONS, demande="Entrez votre choix (Ctrl+C pour quitter): ",
+                                   alerte=message)
     # Récupérer les choix
     if first_choice == "1":
         recherche.menu()
     elif first_choice == "2":
-        choix_classements()
+        classements.menu()
     elif first_choice == "3":
         graphiques.menu()
     else:
         main("Choix invalide ! (Menu Principal)")
-
-
-def choix_classements(message=""):
-    """Menu pour choisir un classement à afficher"""
-
-    # On crée l'affichage des options
-    elems_joueurs = [("age", "Age"), ("poids", "Poids (en kg)"), ("taille", "Taille (en cm)"),
-                     ("salaire", "Salaire (en M€)"),
-                     ("buts_m_joueur", "Nombre de buts marqués"),
-                     ("pass_d", "Nombre de passes décisives"),
-                     ("buts_e_joueur", "Nombre de buts encaissés"), ("matchs_j",
-                                                                     "Nombre de matchs joués"),
-                     ]
-    elems_clubs = [("date_crea", "Date de création"), ("rang", "Rang (+ relégations)"), ("budget", "Budget (en M€)"),
-                   ("titres", "Nombre de titres"),
-                   ("victoires", "Nombre de victoires"),
-                   ("nuls", "Nombre de nuls"),
-                   ("defaites", "Nombre de défaites"),
-                   ("buts_m", "Nombre de buts marqués"),
-                   ("buts_e", "Nombre de buts encaissés"),
-                   ("rendement", "Rendement"),
-                   ("domination", "Domination")]
-
-    options_print = "\033[31mClassements des joueurs\033[0m\n"
-    for index_class, classement_elem in enumerate(elems_joueurs):
-        options_print += f"\033[96m{index_class + 1}\033[0m. {classement_elem[1]}\n"
-
-    options_print += "\n\033[31mClassements des clubs\033[0m\n"
-    for index_class, classement_elem in enumerate(elems_clubs):
-        options_print += f"\033[96m{len(elems_joueurs) + index_class + 1}\033[0m. {classement_elem[1]}\n"
-
-    choix = utils.show_banner("Classement", "Entrez un paramètre par lequel classer les joueurs / les équipes",
-                              emplacement="Menu > Classements",
-                              footer=options_print,
-                              demande="Entrez votre choix (c pour revenir en arrière): ", alerte=message)
-
-    # Récupérer les choix
-    try:
-        int_choice = int(choix)
-        if int_choice <= len(elems_joueurs):
-            # On envoie à la consruction de graphiques personnalisés
-            afficher_classements(datas.joueurs_df, elems_joueurs[int_choice - 1])
-            choix_classements()
-        else:
-            afficher_classements(
-                datas.clubs_df, elems_clubs[int_choice - len(elems_joueurs) - 1])
-            choix_classements()
-    except (ValueError, IndexError):
-        if choix == "c":
-            main()
-        else:
-            choix_classements("Choix invalide ! (Choix de classements)")
-
-
-def afficher_classements(df, elem, show_all=False):
-    """Afficher les classements"""
-
-    # Savoir quelle colonne aller chercher pour le nom
-    col_name = "name" if "name" in df.columns else "nom_prenom"
-
-    # Obtenir la plus grande largeur de nom_prenom
-    max_len = df[col_name].apply(len).max()
-    # Remplir la table
-    table = ""
-
-    sorted_df = df.sort_values(by=elem[0], ascending=elem[0] in [
-        "rang"]).reset_index(drop=True)
-    if show_all:
-        for index, row in sorted_df.iterrows():
-            table += (f"\033[36m{(str(index + 1) + '.').ljust(3)}\033[0m {row[col_name].ljust(max_len)} : \033[96m"
-                      f"{row[elem[0]]}\033[0m\n")
-    else:
-        for index, row in sorted_df.head(10).iterrows():
-            table += (f"\033[36m{(str(index + 1) + '.').ljust(3)}\033[0m {row[col_name].ljust(max_len)} : \033[96m"
-                      f"{row[elem[0]]}\033[0m\n")
-        table += "\n\033[33m...\033[0m\n\n"
-        for index, row in sorted_df.tail(10).iterrows():
-            table += (f"\033[36m{(str(index + 1) + '.').ljust(3)}\033[0m {row[col_name].ljust(max_len)} : \033[96m"
-                      f"{row[elem[0]]}\033[0m\n")
-
-    # On affiche la table
-    subt = ("Classement des equipes par " if col_name == "name" else "Classement des joueurs par ") + elem[1]
-    choix = utils.show_banner("Classement", subt,
-                              emplacement="Menu > Classements > Classement",
-                              footer=table,
-                              demande="Appuyez Entrée pour continuer (* puis Entrée pour tout afficher) :")
-    if choix == "*":
-        afficher_classements(df, elem, True)
 
 
 def width_term_guide(re=False):
@@ -152,10 +65,24 @@ def width_term_guide(re=False):
         width_term_guide(True)
 
 
-if __name__ == "__main__":
-    # width_term_guide()
+def check_terminal():
+    """Vérifier que le terminal est pris en charge"""
     try:
-        while True:
-            main()
+        _ = os.get_terminal_size()
+        return True
+    except OSError:
+        print("Vous êtes sûrement dans un terminal intégré à un IDE, veuillez utiliser un terminal classique.")
+        cont = input("Pour continuer quand même, entrez \"Continuer\" sinon n'entrez rien : ")
+        if cont.lower() == "continuer":
+            return True
+        return False
+
+
+if __name__ == "__main__":
+    try:
+        if check_terminal():
+            width_term_guide()
+            while True:
+                main()
     except KeyboardInterrupt:
         print("Sortie")

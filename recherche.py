@@ -1,19 +1,19 @@
 """Module de recherche de joueur ou d'équipe"""
 import pandas as pd
 
+import datas
 import dessins
 import utils
-import datas
 
 
 def menu():
     """Menu de recherche de joueur ou d'équipe"""
 
     # On affiche la décoration et demande la recherche
-    recherche = utils.show_banner("Recherche",
+    recherche = utils.show_page("Recherche",
                                   "Veuillez rentrer une requête (la forme de la requête n'as pas d'importance)",
-                                  emplacement="Menu > Recherche",
-                                  demande="Entrez le nom du joueur ou de l'équipe à chercher (c pour revenir en "
+                                       emplacement="Menu > Recherche",
+                                       demande="Entrez le nom du joueur ou de l'équipe à chercher (c pour revenir en "
                                           "arrière): ")
     if recherche == "c":
         return
@@ -34,12 +34,12 @@ def menu():
             input("Appuyez sur Entrée pour continuer ...")
         elif affichage != "":
             while True:
-                rep = utils.show_banner("Résultats Recherche",
-                                        subtitle=f'"{recherche}"',
-                                        emplacement="Menu > Recherche > Résultats de la Recherche",
-                                        footer=affichage,
-                                        alerte=message_choix_interne,
-                                        demande="Entrez le numéro de l'élément dont vous voulez obtenir les infos. (c "
+                rep = utils.show_page("Résultats Recherche",
+                                             subtitle=f'"{recherche}"',
+                                             emplacement="Menu > Recherche > Résultats de la Recherche",
+                                             footer=affichage,
+                                             alerte=message_choix_interne,
+                                             demande="Entrez le numéro de l'élément dont vous voulez obtenir les infos. (c "
                                                 "pour revenir en arrière): ")
                 if rep == "c":
                     break
@@ -144,8 +144,8 @@ def search_results_get_first_df(joueurs_recherche, clubs_recherche):
 
 def show_stats(element: pd.Series):
     """Afficher les statistiques d'un joueur ou d'une équipe"""
-    utils.show_banner("Statistiques",
-                      emplacement=f"Menu > Recherche > {element['nom_prenom']} > Statistiques")
+    utils.show_page("Statistiques",
+                           emplacement=f"Menu > Recherche > {element['nom_prenom']} > Statistiques")
     isjoueur = "ville" not in list(element.index)
     if isjoueur:
 

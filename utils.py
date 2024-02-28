@@ -1,9 +1,4 @@
-"""
- _  _      _  ___            _   
-| \| | ___(_)| __| ___  ___ | |_ 
-| .  |(_-/| || _| / _ \/ _ \|  _|
-|_|\_|/__/|_||_|  \___/\___/ \__|
-"""
+"""Module de fonctions utilitaires"""
 import os
 from difflib import SequenceMatcher
 
@@ -21,7 +16,8 @@ table_chars_decod = (
 
 
 def my_unidecode(string: str) -> str:
-    """Enlève les accents d'une chaîne de caractères, d'après le module unidecode"""
+    """Enlève les accents d'une chaîne de caractères,
+    d'après le module unidecode (https://github.com/avian2/unidecode/tree/master/unidecode)"""
     new_string = ""
 
     for character in string:
@@ -46,16 +42,17 @@ def term_size():
     try:
         ts = os.get_terminal_size()
         return ts.columns, ts.lines
-    except:
-        # TODO Message
+    except OSError:
         return 80, 24
 
 
 def clear_console():
+    """Vider le terminal"""
     os.system('cls' if os.name == 'nt' else 'clear')
 
 
-def show_banner(title: str, subtitle="", emplacement="", header="", footer="", demande="", alerte=""):
+def show_page(title: str, subtitle="", emplacement="", header="", footer="", demande="", alerte=""):
+    """Afficher une page"""
     # Vider le terminal 
     clear_console()
 

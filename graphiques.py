@@ -1,6 +1,7 @@
 """Module de graphiques"""
 import matplotlib.pyplot as plt
 import numpy as np
+
 import datas
 import dessins
 import utils
@@ -16,9 +17,9 @@ def menu(message=""):
         options_print += f"{nom}\n"
     options_print += "\n" + datas.GRAPH_REC[-1][0]
 
-    choix = utils.show_banner("Graphiques", "Veuillez choisir une option", emplacement="Menu > Graphiques",
-                              footer=options_print,
-                              demande="Entrez votre choix (c pour revenir en arrière): ", alerte=message)
+    choix = utils.show_page("Graphiques", "Veuillez choisir une option", emplacement="Menu > Graphiques",
+                            footer=options_print,
+                            demande="Entrez votre choix (c pour revenir en arrière): ", alerte=message)
 
     # Récupérer les choix
     try:
@@ -139,8 +140,8 @@ def compo_graphiques_ask_abs(ordonnes_choisies):
 def compo_graphiques_show_liste(message=""):
     """Affiche la liste des paramètres pour la composition de graphiques personnalisés"""
     utils.clear_console()
-    utils.show_banner("Graphiques Personnalisés", "Veuillez choisir une option",
-                      emplacement="Menu > Graphiques > Graphique Personnalisé")
+    utils.show_page("Graphiques Personnalisés", "Veuillez choisir une option",
+                    emplacement="Menu > Graphiques > Graphique Personnalisé")
     print(
         "\033[1;31m*\033[0;31m: Paramètres disponibles uniquement en Abscisses\033[0m")
     # On affiche la liste de paramètres
@@ -163,8 +164,8 @@ def compute_graphiques(abscisse_choisie, ordonnes_choisies):
     if abscisse_choisie == 0:
         joueurs_df_take = select_joueurs(joueurs_df_take)
     print("Préparation de votre graphique")
-    utils.show_banner("Graphiques Personnalisés", footer=dessins.GRAPH_WAIT,
-                      emplacement="Menu > Graphiques > Graphique Personnalisé > Préparation du graphique")
+    utils.show_page("Graphiques Personnalisés", footer=dessins.GRAPH_WAIT,
+                    emplacement="Menu > Graphiques > Graphique Personnalisé > Préparation du graphique")
 
     # Définir les valeurs en abscisse
     if "Club" in datas.GRAPH_ELEMENTS[abscisse_choisie][0]:
@@ -239,22 +240,22 @@ def select_joueurs(joueurs_df_take):
     # Soit sélectionner tout, soit par équipe, soit par nom de joueur
     options = "\033[96m*\033[0m: tous\n\033[96me\033[0m: Par équipe\n\033[96mi\033[0m: Individuellement"
     while True:
-        type_select = utils.show_banner("Graphiques Personnalisés",
-                                        "Veuillez choisir le mode de selection des joueurs",
-                                        footer=options,
-                                        demande="Entrez votre choix (c pour revenir en arrière): ",
-                                        alerte=msg,
-                                        emplacement="Menu > Graphiques > Graphique Personnalisé > Selection joueurs")
+        type_select = utils.show_page("Graphiques Personnalisés",
+                                      "Veuillez choisir le mode de selection des joueurs",
+                                      footer=options,
+                                      demande="Entrez votre choix (c pour revenir en arrière): ",
+                                      alerte=msg,
+                                      emplacement="Menu > Graphiques > Graphique Personnalisé > Selection joueurs")
         if type_select == "*":
             break
         elif type_select == "e":
             # Selection par equipe
             eqs_select = []
-            eqs_texte = utils.show_banner("Graphiques Personnalisés",
-                                          "Veuillez choisir l(es) équipe(s) des joueurs à afficher",
-                                          demande="Entrez vos choix séparés par / (c pour revenir en arrière): ",
-                                          emplacement="Menu > Graphiques > Graphique Personnalisé > Selection des "
-                                                      "joueurs")
+            eqs_texte = utils.show_page("Graphiques Personnalisés",
+                                        "Veuillez choisir l(es) équipe(s) des joueurs à afficher",
+                                        demande="Entrez vos choix séparés par / (c pour revenir en arrière): ",
+                                        emplacement="Menu > Graphiques > Graphique Personnalisé > Selection des "
+                                                    "joueurs")
             # On fait une recherche avec les données entrées
             for eq_txt in eqs_texte.split('/'):
                 _, res_df = compute_recherche(eq_txt.strip())
@@ -272,11 +273,11 @@ def select_joueurs(joueurs_df_take):
         elif type_select == "i":
             # Selection par joueurs
             jrs_select = []
-            jrs_texte = utils.show_banner("Graphiques Personnalisés",
-                                          "Veuillez choisir les noms des joueurs à afficher",
-                                          demande="Entrez vos choix séparés par / (c pour revenir en arrière): ",
-                                          emplacement="Menu > Graphiques > Graphique Personnalisé > Selection des "
-                                                      "joueurs")
+            jrs_texte = utils.show_page("Graphiques Personnalisés",
+                                        "Veuillez choisir les noms des joueurs à afficher",
+                                        demande="Entrez vos choix séparés par / (c pour revenir en arrière): ",
+                                        emplacement="Menu > Graphiques > Graphique Personnalisé > Selection des "
+                                                    "joueurs")
 
             # On fait une recherche avec les données entrées
             for jr_txt in jrs_texte.split('/'):
