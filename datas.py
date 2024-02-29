@@ -2,8 +2,8 @@
 import pandas as pd
 
 # Charger les données des fichiers CSV
-clubs_df = pd.read_csv("clubs.csv", delimiter=';')
-joueurs_df = pd.read_csv("joueurs.csv", delimiter=';')
+clubs_df = pd.read_csv("datas/clubs.csv", delimiter=';')
+joueurs_df = pd.read_csv("datas/joueurs.csv", delimiter=';')
 
 # Ajouter des variables fabriquées
 clubs_df["rendement"] = 1 / (clubs_df["rang"] * clubs_df["budget"])

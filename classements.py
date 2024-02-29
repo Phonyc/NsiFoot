@@ -84,8 +84,10 @@ def afficher_classements(df, elem, show_all=False):
 
             table += (f"\033[36m{(str(index + 1) + '.').ljust(3)}\033[0m {insert}{row[col_name].ljust(max_len)}{insert2}"
                       f" : \033[96m{row[elem[0]]}\033[0m\n")
-
-        table += "\nEn rouge : 2 derniers clubs relégués\n"
+        
+        if elem[0] == "rang":
+            table += "\nEn rouge : 2 derniers clubs relégués\n"
+    
     # On affiche la table
     subt = ("Classement des equipes par " if col_name == "name" else "Classement des joueurs par ") + elem[1]
     choix = utils.show_page("Classement", subt,

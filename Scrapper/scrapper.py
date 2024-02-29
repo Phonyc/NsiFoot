@@ -432,4 +432,4 @@ class Formateur:
 
 frmt = Formateur(clubs=json.load(open('Scrapper/out_club_middle.json', 'r', encoding='utf-8')),
                  joueurs=json.load(open('Scrapper/joueurs_temp.json', 'r', encoding='utf-8')))
-frmt.save("clubs.csv", "joueurs.csv")
+frmt.save("datas/clubs.csv", "datas/joueurs.csv")

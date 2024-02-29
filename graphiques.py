@@ -158,7 +158,7 @@ def compo_graphiques_show_liste(message=""):
 
 
 def compute_graphiques(abscisse_choisie, ordonnes_choisies):
-    """Créer les listes de valeurs des graphiques"""
+    """Créer les listes de valeurs à mettre dans les graphiques"""
     joueurs_df_take = datas.joueurs_df.copy(deep=True)
     # Si l'abscisse est les noms, on demande à sélectionner les noms
     if abscisse_choisie == 0:
@@ -303,6 +303,7 @@ def select_joueurs(joueurs_df_take):
 
 
 def graphiques_plot(list_abs, valeurs, valeurs_decrs, x_legend, title):
+    """Affichage de graphiques"""
     # Liste de couleurs pour les graphiques
     list_colors = ["blue", "orange", "green", "red", "purple", "brown", "pink", "gray", "olive", "cyan", "black",
                    "indigo", "lime", "navy", "teal", "yellow", "aqua", "fuchsia", "maroon", "silver", "white", "violet",
@@ -399,15 +400,16 @@ def graphiques_plot(list_abs, valeurs, valeurs_decrs, x_legend, title):
             if "Nombre" in legende:
                 if nombre_index is None:
                     nombre_index = i
-                    axe.plot(list_abs_moy, val_moy, label=legende +
-                                                          " (Moyenne)", color=list_colors[i])
+                    axe.plot(list_abs_moy, val_moy,
+                             label=legende + " (Moyenne)", color=list_colors[i])
                 else:
                     axes[nombre_index].plot(
-                        list_abs_moy, val_moy, label=legende + " (Moyenne)", color=list_colors[i])
+                        list_abs_moy, val_moy,
+                        label=legende + " (Moyenne)", color=list_colors[i])
                     ax_del.append(i)
             else:
-                axe.plot(list_abs_moy, val_moy, label=legende +
-                                                      " (Moyenne)", color=list_colors[i])
+                axe.plot(list_abs_moy, val_moy,
+                         label=legende + " (Moyenne)", color=list_colors[i])
 
     # Supprimer / Cacher les axes inutiles
     for idx_del in ax_del:
@@ -446,5 +448,4 @@ def graphiques_plot(list_abs, valeurs, valeurs_decrs, x_legend, title):
     plt.gcf().autofmt_xdate()
 
     # Affichage du graphique
-
     plt.show()
